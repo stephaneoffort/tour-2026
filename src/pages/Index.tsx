@@ -89,6 +89,8 @@ export default function Index() {
   const [data, setData] = useState<TourFormData>(INITIAL);
   const [submitted, setSubmitted] = useState(false);
   const [generating, setGenerating] = useState(false);
+  const [wantsCopy, setWantsCopy] = useState(false);
+  const [copyEmail, setCopyEmail] = useState('');
   const formRef = useRef<HTMLFormElement>(null);
   const lastData = useRef<TourFormData | null>(null);
 
