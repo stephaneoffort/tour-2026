@@ -1,7 +1,8 @@
 import { useState, useRef, useCallback } from 'react';
 import headerBanner from '@/assets/header-banner.jpg';
 import { COUNTRY_CODES, COUNTRIES, MONTHS_LIST, type TourFormData } from '@/lib/formData';
-import { downloadPDF, openMailto } from '@/lib/generatePdf';
+import { downloadPDF, openMailto, generatePDF } from '@/lib/generatePdf';
+import { supabase } from '@/integrations/supabase/client';
 
 const INITIAL: TourFormData = {
   center_name: '', city: '', country: '',
@@ -98,7 +99,7 @@ export default function Index() {
     setData(prev => ({ ...prev, [field]: value }));
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formRef.current?.checkValidity()) {
       formRef.current?.reportValidity();
@@ -108,12 +109,33 @@ export default function Index() {
     setGenerating(true);
     lastData.current = data;
 
-    setTimeout(() => {
-      downloadPDF(data);
+    try {
+      // Generate and download PDF
+      const doc = generatePDF(data);
+      const fileName = 'Tour2026_' + (data.center_name || 'request').replace(/\s+/g, '_') + '.pdf';
+      doc.save(fileName);
+
+      // Send copy via email if requested
+      if (wantsCopy && copyEmail) {
+        const pdfBase64 = doc.output('datauristring').split(',')[1];
+        await supabase.functions.invoke('send-pdf-email', {
+          body: {
+            to: copyEmail,
+            subject: 'Tour 2026 — Copy of your request for ' + data.center_name,
+            pdfBase64,
+            centerName: data.center_name,
+          },
+        });
+      }
+
+      // Open mailto to tour org
       openMailto(data, wantsCopy && copyEmail ? copyEmail : undefined);
-      setGenerating(false);
-      setSubmitted(true);
-    }, 100);
+    } catch (err) {
+      console.error('Error:', err);
+    }
+
+    setGenerating(false);
+    setSubmitted(true);
   };
 
   const handleRedownload = () => {
