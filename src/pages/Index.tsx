@@ -1,16 +1,287 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState, useRef, useCallback } from 'react';
+import headerBanner from '@/assets/header-banner.jpg';
+import { COUNTRY_CODES, COUNTRIES, MONTHS_LIST, type TourFormData } from '@/lib/formData';
+import { downloadPDF, openMailto } from '@/lib/generatePdf';
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
-  return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
-    </div>
-  );
+const INITIAL: TourFormData = {
+  center_name: '', city: '', country: '',
+  p1_firstname: '', p1_lastname: '', p1_code: '', p1_phone: '', p1_email: '',
+  p2_firstname: '', p2_lastname: '', p2_code: '', p2_phone: '', p2_email: '',
+  start_day: '', start_month: '', end_day: '', end_month: '',
+  topics: '', empowerments: '', comments: '',
 };
 
-const Index = PlaceholderIndex;
+function SectionTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <h2 className="font-body font-semibold text-[0.72rem] tracking-[0.18em] uppercase text-gold py-2.5 px-[18px] bg-secondary/10 border-l-[3px] border-gold mb-7">
+      {children}
+    </h2>
+  );
+}
 
-export default Index;
+function FieldLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <label className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-bgray">
+      {children}
+    </label>
+  );
+}
+
+const inputClass =
+  "bg-foreground/5 border border-foreground/10 border-b-2 border-b-secondary text-foreground font-body text-[0.95rem] font-light px-3.5 py-2.5 outline-none transition-all duration-250 w-full rounded-sm focus:border-b-gold focus:bg-primary/[0.07] focus:shadow-[0_4px_18px_hsl(var(--primary)/0.08)] placeholder:text-foreground/25 placeholder:italic appearance-none";
+
+const selectClass = inputClass + " bg-no-repeat bg-[right_12px_center] pr-[34px] cursor-pointer";
+
+const selectBgStyle = {
+  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9963A' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")`,
+};
+
+function PersonBlock({
+  num, data, onChange
+}: {
+  num: 1 | 2;
+  data: TourFormData;
+  onChange: (field: keyof TourFormData, value: string) => void;
+}) {
+  const prefix = `p${num}_` as const;
+  const required = num === 1;
+
+  return (
+    <div className="border border-secondary/25 border-t-2 border-t-secondary px-5 pt-5 pb-3.5 mb-5 bg-navy/[0.07]">
+      <h3 className="font-display font-semibold text-[1.05rem] text-gold-light mb-[18px] tracking-[0.04em]">
+        Person responsible {num}
+      </h3>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+        <div className="flex flex-col gap-[7px]">
+          <FieldLabel>First name</FieldLabel>
+          <input className={inputClass} value={data[`${prefix}firstname`]} onChange={e => onChange(`${prefix}firstname`, e.target.value)} required={required} />
+        </div>
+        <div className="flex flex-col gap-[7px]">
+          <FieldLabel>Last name</FieldLabel>
+          <input className={inputClass} value={data[`${prefix}lastname`]} onChange={e => onChange(`${prefix}lastname`, e.target.value)} required={required} />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+        <div className="flex flex-col gap-[7px]">
+          <FieldLabel>Phone</FieldLabel>
+          <div className="grid grid-cols-[180px_1fr] gap-5 max-sm:grid-cols-1">
+            <select className={selectClass} style={selectBgStyle} value={data[`${prefix}code`]} onChange={e => onChange(`${prefix}code`, e.target.value)}>
+              <option value="">Code</option>
+              {COUNTRY_CODES.map(([code, country]) => (
+                <option key={code} value={code} className="bg-navy text-foreground">{code}  {country}</option>
+              ))}
+            </select>
+            <input className={inputClass} value={data[`${prefix}phone`]} onChange={e => onChange(`${prefix}phone`, e.target.value)} />
+          </div>
+        </div>
+        <div className="flex flex-col gap-[7px]">
+          <FieldLabel>Email</FieldLabel>
+          <input type="email" className={inputClass} placeholder="@example.com" value={data[`${prefix}email`]} onChange={e => onChange(`${prefix}email`, e.target.value)} required={required} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function Index() {
+  const [data, setData] = useState<TourFormData>(INITIAL);
+  const [submitted, setSubmitted] = useState(false);
+  const [generating, setGenerating] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const lastData = useRef<TourFormData | null>(null);
+
+  const onChange = useCallback((field: keyof TourFormData, value: string) => {
+    setData(prev => ({ ...prev, [field]: value }));
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formRef.current?.checkValidity()) {
+      formRef.current?.reportValidity();
+      return;
+    }
+
+    setGenerating(true);
+    lastData.current = data;
+
+    setTimeout(() => {
+      downloadPDF(data);
+      openMailto(data);
+      setGenerating(false);
+      setSubmitted(true);
+    }, 100);
+  };
+
+  const handleRedownload = () => {
+    if (lastData.current) downloadPDF(lastData.current);
+  };
+
+  const days = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
+
+  return (
+    <div className="min-h-screen bg-background">
+      <img src={headerBanner} alt="Organisation of the 2026 Tours" className="w-full block border-b-[3px] border-b-gold" />
+
+      <div className="max-w-[860px] mx-auto px-6 pt-12 pb-20">
+        <div className="text-center mb-12">
+          <p className="font-display italic text-[1.15rem] text-bgray tracking-[0.03em]">
+            Please fill in the form below and submit your request for the 2026 tours.
+          </p>
+        </div>
+
+        <form ref={formRef} onSubmit={handleSubmit}>
+          {/* Center Information */}
+          <div className="mb-10 animate-fade-up" style={{ animationDelay: '0.05s' }}>
+            <SectionTitle>Center Information</SectionTitle>
+            <div className="grid grid-cols-1 gap-5 mb-5">
+              <div className="flex flex-col gap-[7px]">
+                <FieldLabel>Name of the center</FieldLabel>
+                <input className={inputClass} value={data.center_name} onChange={e => onChange('center_name', e.target.value)} required />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div className="flex flex-col gap-[7px]">
+                <FieldLabel>City</FieldLabel>
+                <input className={inputClass} value={data.city} onChange={e => onChange('city', e.target.value)} required />
+              </div>
+              <div className="flex flex-col gap-[7px]">
+                <FieldLabel>Country</FieldLabel>
+                <select className={selectClass} style={selectBgStyle} value={data.country} onChange={e => onChange('country', e.target.value)} required>
+                  <option value="">— Select a country —</option>
+                  {COUNTRIES.map(c => <option key={c} value={c} className="bg-navy text-foreground">{c}</option>)}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div className="h-px bg-gradient-to-r from-transparent via-gold to-transparent my-10 opacity-40" />
+
+          {/* Persons Responsible */}
+          <div className="mb-10 animate-fade-up" style={{ animationDelay: '0.15s' }}>
+            <SectionTitle>Persons Responsible</SectionTitle>
+            <PersonBlock num={1} data={data} onChange={onChange} />
+            <PersonBlock num={2} data={data} onChange={onChange} />
+          </div>
+
+          <div className="h-px bg-gradient-to-r from-transparent via-gold to-transparent my-10 opacity-40" />
+
+          {/* Course Details */}
+          <div className="mb-10 animate-fade-up" style={{ animationDelay: '0.25s' }}>
+            <SectionTitle>Course Details</SectionTitle>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-5">
+              {/* Start date */}
+              <div>
+                <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Start date — 2026</h4>
+                <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
+                  <div className="flex flex-col gap-[7px]">
+                    <FieldLabel>Day</FieldLabel>
+                    <select className={selectClass} style={selectBgStyle} value={data.start_day} onChange={e => onChange('start_day', e.target.value)} required>
+                      <option value="">—</option>
+                      {days.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
+                    </select>
+                  </div>
+                  <div className="flex flex-col gap-[7px]">
+                    <FieldLabel>Month</FieldLabel>
+                    <select className={selectClass} style={selectBgStyle} value={data.start_month} onChange={e => onChange('start_month', e.target.value)} required>
+                      <option value="">— Month —</option>
+                      {MONTHS_LIST.map((m, i) => {
+                        const num = String(i + 1).padStart(2, '0');
+                        return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
+                      })}
+                    </select>
+                  </div>
+                  <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">
+                    2026
+                  </div>
+                </div>
+              </div>
+
+              {/* End date */}
+              <div>
+                <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">End date — 2026</h4>
+                <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
+                  <div className="flex flex-col gap-[7px]">
+                    <FieldLabel>Day</FieldLabel>
+                    <select className={selectClass} style={selectBgStyle} value={data.end_day} onChange={e => onChange('end_day', e.target.value)} required>
+                      <option value="">—</option>
+                      {days.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
+                    </select>
+                  </div>
+                  <div className="flex flex-col gap-[7px]">
+                    <FieldLabel>Month</FieldLabel>
+                    <select className={selectClass} style={selectBgStyle} value={data.end_month} onChange={e => onChange('end_month', e.target.value)} required>
+                      <option value="">— Month —</option>
+                      {MONTHS_LIST.map((m, i) => {
+                        const num = String(i + 1).padStart(2, '0');
+                        return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
+                      })}
+                    </select>
+                  </div>
+                  <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">
+                    2026
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-5 mt-5">
+              <div className="flex flex-col gap-[7px]">
+                <FieldLabel>Topic(s) of the course</FieldLabel>
+                <textarea className={inputClass + " resize-vertical min-h-[110px]"} value={data.topics} onChange={e => onChange('topics', e.target.value)} />
+              </div>
+              <div className="flex flex-col gap-[7px]">
+                <FieldLabel>Request for empowerment(s)</FieldLabel>
+                <textarea className={inputClass + " resize-vertical min-h-[110px]"} value={data.empowerments} onChange={e => onChange('empowerments', e.target.value)} />
+              </div>
+              <div className="flex flex-col gap-[7px]">
+                <FieldLabel>Would you like to add something?</FieldLabel>
+                <textarea className={inputClass + " resize-none overflow-hidden min-h-[44px]"} value={data.comments} onChange={e => onChange('comments', e.target.value)} />
+              </div>
+            </div>
+          </div>
+
+          {/* Submit */}
+          <div className="text-center mt-12 animate-fade-up" style={{ animationDelay: '0.35s' }}>
+            <button
+              type="submit"
+              disabled={generating}
+              className="inline-block bg-gradient-to-br from-gold to-gold-dark text-navy-deep font-body font-bold text-[0.9rem] tracking-[0.25em] uppercase py-4 px-14 border-none cursor-pointer relative transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_hsl(var(--primary)/0.35)] active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
+              style={{ clipPath: 'polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%)' }}
+            >
+              <span className="relative z-10">
+                {generating ? 'Generating PDF…' : 'Generate & Send PDF'}
+              </span>
+            </button>
+            <p className="mt-[18px] text-[0.78rem] text-dgray">
+              A PDF summary will be generated and downloaded, and your email client will open to send it.
+            </p>
+          </div>
+
+          {/* Success message */}
+          {submitted && (
+            <div className="text-center p-8 border border-gold bg-primary/[0.08] mt-8">
+              <h3 className="font-display text-[1.6rem] text-gold mb-2">Thank you</h3>
+              <p className="text-bgray text-[0.9rem]">Your PDF has been downloaded automatically.</p>
+              <p className="text-bgray text-[0.9rem] mt-2">
+                Please attach it to the email that just opened and send it to{' '}
+                <a href="mailto:tour2026@jamgon-kongtrul.org" className="text-secondary hover:text-gold transition-colors no-underline">
+                  tour2026@jamgon-kongtrul.org
+                </a>
+              </p>
+              <button
+                type="button"
+                onClick={handleRedownload}
+                className="inline-block mt-4 bg-transparent border border-gold text-gold font-body text-[0.82rem] font-medium tracking-[0.15em] uppercase py-2.5 px-7 cursor-pointer transition-colors hover:bg-gold hover:text-navy-deep"
+              >
+                ⬇ Download PDF again
+              </button>
+            </div>
+          )}
+        </form>
+      </div>
+    </div>
+  );
+}
