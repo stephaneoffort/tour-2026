@@ -67,7 +67,7 @@ function PersonBlock({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
         <div className="flex flex-col gap-[7px]">
           <FieldLabel>Phone</FieldLabel>
-          <div className="grid grid-cols-[180px_1fr] gap-5 max-sm:grid-cols-1">
+          <div className="grid grid-cols-[120px_1fr] gap-2 sm:grid-cols-[180px_1fr] sm:gap-5">
             <select className={selectClass} style={selectBgStyle} value={data[`${prefix}code`]} onChange={e => onChange(`${prefix}code`, e.target.value)}>
               <option value="">Code</option>
               {COUNTRY_CODES.map(([code, country]) => (
