@@ -89,6 +89,8 @@ export default function Index() {
   const [data, setData] = useState<TourFormData>(INITIAL);
   const [submitted, setSubmitted] = useState(false);
   const [generating, setGenerating] = useState(false);
+  const [wantsCopy, setWantsCopy] = useState(false);
+  const [copyEmail, setCopyEmail] = useState('');
   const formRef = useRef<HTMLFormElement>(null);
   const lastData = useRef<TourFormData | null>(null);
 
@@ -108,7 +110,7 @@ export default function Index() {
 
     setTimeout(() => {
       downloadPDF(data);
-      openMailto(data);
+      openMailto(data, wantsCopy && copyEmail ? copyEmail : undefined);
       setGenerating(false);
       setSubmitted(true);
     }, 100);
@@ -241,6 +243,31 @@ export default function Index() {
                 <textarea className={inputClass + " resize-none overflow-hidden min-h-[44px]"} value={data.comments} onChange={e => onChange('comments', e.target.value)} />
               </div>
             </div>
+          </div>
+
+          {/* Receive copy option */}
+          <div className="mb-8 animate-fade-up" style={{ animationDelay: '0.3s' }}>
+            <div className="flex items-center gap-3 cursor-pointer" onClick={() => setWantsCopy(!wantsCopy)}>
+              <div className={`w-5 h-5 border-2 rounded-sm flex items-center justify-center transition-all ${wantsCopy ? 'bg-gold border-gold' : 'border-bgray/50 bg-foreground/5'}`}>
+                {wantsCopy && <span className="text-navy-deep text-xs font-bold">✓</span>}
+              </div>
+              <span className="text-[0.85rem] text-bgray">I would like to receive a copy of the PDF by email</span>
+            </div>
+            {wantsCopy && (
+              <div className="mt-4 ml-8 max-w-sm">
+                <div className="flex flex-col gap-[7px]">
+                  <FieldLabel>Your email address</FieldLabel>
+                  <input
+                    type="email"
+                    className={inputClass}
+                    placeholder="your@email.com"
+                    value={copyEmail}
+                    onChange={e => setCopyEmail(e.target.value)}
+                    required={wantsCopy}
+                  />
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Submit */}

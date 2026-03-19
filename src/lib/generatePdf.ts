@@ -167,7 +167,7 @@ export function downloadPDF(data: TourFormData) {
   return fileName;
 }
 
-export function openMailto(data: TourFormData) {
+export function openMailto(data: TourFormData, ccEmail?: string) {
   const subject = encodeURIComponent('Tour 2026 — Request from ' + data.center_name + ', ' + data.country);
   const body = encodeURIComponent(
     'Please find attached the completed request form for the 2026 tour.\n\n' +
@@ -178,5 +178,6 @@ export function openMailto(data: TourFormData) {
     ' to ' + (data.end_day || '?') + '/' + (data.end_month || '?') + '/2026 \n\n' +
     '(PDF attached)'
   );
-  window.location.href = 'mailto:tour2026@jamgon-kongtrul.org?subject=' + subject + '&body=' + body;
+  const cc = ccEmail ? '&cc=' + encodeURIComponent(ccEmail) : '';
+  window.location.href = 'mailto:tour2026@jamgon-kongtrul.org?subject=' + subject + cc + '&body=' + body;
 }
