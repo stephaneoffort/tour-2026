@@ -110,7 +110,7 @@ export default function Index() {
 
     setTimeout(() => {
       downloadPDF(data);
-      openMailto(data);
+      openMailto(data, wantsCopy && copyEmail ? copyEmail : undefined);
       setGenerating(false);
       setSubmitted(true);
     }, 100);
