@@ -296,11 +296,11 @@ export default function Index() {
               style={{ clipPath: 'polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%)' }}
             >
               <span className="relative z-10">
-                {generating ? 'Generating PDF…' : 'Generate & Send PDF'}
+                {generating ? 'Sending…' : 'Send'}
               </span>
             </button>
             <p className="mt-[18px] text-[0.78rem] text-dgray">
-              A PDF summary will be generated and downloaded, and your email client will open to send it.
+              A PDF summary will be generated and sent to tour2026@jamgon-kongtrul.org.
             </p>
           </div>
 
@@ -308,13 +308,7 @@ export default function Index() {
           {submitted && (
             <div className="text-center p-8 border border-gold bg-primary/[0.08] mt-8">
               <h3 className="font-display text-[1.6rem] text-gold mb-2">Thank you</h3>
-              <p className="text-bgray text-[0.9rem]">Your PDF has been downloaded automatically.</p>
-              <p className="text-bgray text-[0.9rem] mt-2">
-                Please attach it to the email that just opened and send it to{' '}
-                <a href="mailto:tour2026@jamgon-kongtrul.org" className="text-secondary hover:text-gold transition-colors no-underline">
-                  tour2026@jamgon-kongtrul.org
-                </a>
-              </p>
+              <p className="text-bgray text-[0.9rem]">Your request has been sent successfully to tour2026@jamgon-kongtrul.org.</p>
               <button
                 type="button"
                 onClick={handleRedownload}
