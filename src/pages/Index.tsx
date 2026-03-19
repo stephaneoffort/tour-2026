@@ -296,7 +296,7 @@ export default function Index() {
               style={{ clipPath: 'polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%)' }}
             >
               <span className="relative z-10">
-                {generating ? 'Generating PDF…' : 'Generate & Send PDF'}
+                {generating ? 'Sending…' : 'Send'}
               </span>
             </button>
             <p className="mt-[18px] text-[0.78rem] text-dgray">
