@@ -300,7 +300,7 @@ export default function Index() {
               </span>
             </button>
             <p className="mt-[18px] text-[0.78rem] text-dgray">
-              A PDF summary will be generated and downloaded, and your email client will open to send it.
+              A PDF summary will be generated and sent to tour2026@jamgon-kongtrul.org.
             </p>
           </div>
 
