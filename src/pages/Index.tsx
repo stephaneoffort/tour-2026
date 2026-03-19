@@ -115,21 +115,16 @@ export default function Index() {
       const fileName = 'Tour2026_' + (data.center_name || 'request').replace(/\s+/g, '_') + '.pdf';
       doc.save(fileName);
 
-      // Send copy via email if requested
-      if (wantsCopy && copyEmail) {
-        const pdfBase64 = doc.output('datauristring').split(',')[1];
-        await supabase.functions.invoke('send-pdf-email', {
-          body: {
-            to: copyEmail,
-            subject: 'Tour 2026 — Copy of your request for ' + data.center_name,
-            pdfBase64,
-            centerName: data.center_name,
-          },
-        });
-      }
-
-      // Open mailto to tour org
-      openMailto(data, wantsCopy && copyEmail ? copyEmail : undefined);
+      // Always send PDF to tour org, optionally CC the applicant
+      const pdfBase64 = doc.output('datauristring').split(',')[1];
+      await supabase.functions.invoke('send-pdf-email', {
+        body: {
+          copyTo: wantsCopy && copyEmail ? copyEmail : undefined,
+          subject: 'Tour 2026 — Request from ' + data.center_name + ', ' + data.country,
+          pdfBase64,
+          centerName: data.center_name,
+        },
+      });
     } catch (err) {
       console.error('Error:', err);
     }
