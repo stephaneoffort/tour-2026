@@ -295,7 +295,13 @@ export default function Index() {
               className="inline-block bg-gradient-to-br from-gold to-gold-dark text-navy-deep font-body font-bold text-[0.9rem] tracking-[0.25em] uppercase py-4 px-14 border-none cursor-pointer relative transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_hsl(var(--primary)/0.35)] active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
               style={{ clipPath: 'polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%)' }}
             >
-              <span className="relative z-10">
+              <span className="relative z-10 flex items-center gap-2 justify-center">
+                {generating && (
+                  <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                )}
                 {generating ? 'Sending…' : 'Send'}
               </span>
             </button>
