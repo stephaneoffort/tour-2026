@@ -251,24 +251,21 @@ export default function Index() {
             {/* Second date proposal */}
             <div className="mt-6 mb-2">
               <div className="flex items-center gap-3 cursor-pointer mb-4" onClick={() => {
-                if (data.start_day2 || data.start_month2 || data.end_day2 || data.end_month2) {
+                if (showDates2) {
                   onChange('start_day2', '');
                   onChange('start_month2', '');
                   onChange('end_day2', '');
                   onChange('end_month2', '');
-                } else {
-                  onChange('start_day2', '__show__');
-                  onChange('start_day2', '');
                 }
-                setData(prev => ({ ...prev, _showDates2: !prev._showDates2 } as any));
+                setShowDates2(!showDates2);
               }}>
                 <span className="text-[0.82rem] text-gold italic underline underline-offset-2 hover:text-gold-light transition-colors">
-                  + Add a second date proposal (optional)
+                  {showDates2 ? '− Remove second date proposal' : '+ Add a second date proposal (optional)'}
                 </span>
               </div>
             </div>
 
-            {(data as any)._showDates2 && (
+            {showDates2 && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-5 border border-secondary/20 p-5 bg-navy/[0.04]">
                 <div>
                   <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Alternative start date — 2026</h4>
