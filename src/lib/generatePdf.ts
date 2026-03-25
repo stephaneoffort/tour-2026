@@ -140,6 +140,24 @@ export function generatePDF(obj: TourFormData): jsPDF {
       ? obj.end_day + ' / ' + MONTHS_LIST[parseInt(obj.end_month) - 1] + ' 2026'
       : '—');
 
+  const hasAlt = obj.start_day2 || obj.start_month2 || obj.end_day2 || obj.end_month2;
+  if (hasAlt) {
+    y += 4;
+    doc.setTextColor(...BLUE);
+    doc.setFont('helvetica', 'italic');
+    doc.setFontSize(7.5);
+    doc.text('Alternative dates (2nd proposal)', ML + 4, y + 3);
+    y += 6;
+    row('Alt. start date',
+      obj.start_day2 && obj.start_month2
+        ? obj.start_day2 + ' / ' + MONTHS_LIST[parseInt(obj.start_month2) - 1] + ' 2026'
+        : '—', 4);
+    row('Alt. end date',
+      obj.end_day2 && obj.end_month2
+        ? obj.end_day2 + ' / ' + MONTHS_LIST[parseInt(obj.end_month2) - 1] + ' 2026'
+        : '—', 4);
+  }
+
   y += 2;
   rowMulti('Topic(s)', obj.topics);
   rowMulti('Empowerment(s)', obj.empowerments);

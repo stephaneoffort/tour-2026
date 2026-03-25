@@ -9,6 +9,7 @@ const INITIAL: TourFormData = {
   p1_firstname: '', p1_lastname: '', p1_code: '', p1_phone: '', p1_email: '',
   p2_firstname: '', p2_lastname: '', p2_code: '', p2_phone: '', p2_email: '',
   start_day: '', start_month: '', end_day: '', end_month: '',
+  start_day2: '', start_month2: '', end_day2: '', end_month2: '',
   topics: '', empowerments: '', comments: '',
 };
 
@@ -91,6 +92,7 @@ export default function Index() {
   const [submitted, setSubmitted] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [wantsCopy, setWantsCopy] = useState(false);
+  const [showDates2, setShowDates2] = useState(false);
   const [copyEmail, setCopyEmail] = useState('');
   const formRef = useRef<HTMLFormElement>(null);
   const lastData = useRef<TourFormData | null>(null);
@@ -245,6 +247,79 @@ export default function Index() {
                 </div>
               </div>
             </div>
+
+            {/* Second date proposal */}
+            <div className="mt-6 mb-2">
+              <div className="flex items-center gap-3 cursor-pointer mb-4" onClick={() => {
+                if (showDates2) {
+                  onChange('start_day2', '');
+                  onChange('start_month2', '');
+                  onChange('end_day2', '');
+                  onChange('end_month2', '');
+                }
+                setShowDates2(!showDates2);
+              }}>
+                <span className="text-[0.82rem] text-gold italic underline underline-offset-2 hover:text-gold-light transition-colors">
+                  {showDates2 ? '− Remove second date proposal' : '+ Add a second date proposal (optional)'}
+                </span>
+              </div>
+            </div>
+
+            {showDates2 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-5 border border-secondary/20 p-5 bg-navy/[0.04]">
+                <div>
+                  <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Alternative start date — 2026</h4>
+                  <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
+                    <div className="flex flex-col gap-[7px]">
+                      <FieldLabel>Day</FieldLabel>
+                      <select className={selectClass} style={selectBgStyle} value={data.start_day2} onChange={e => onChange('start_day2', e.target.value)}>
+                        <option value="">—</option>
+                        {days.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
+                      </select>
+                    </div>
+                    <div className="flex flex-col gap-[7px]">
+                      <FieldLabel>Month</FieldLabel>
+                      <select className={selectClass} style={selectBgStyle} value={data.start_month2} onChange={e => onChange('start_month2', e.target.value)}>
+                        <option value="">— Month —</option>
+                        {MONTHS_LIST.map((m, i) => {
+                          const num = String(i + 1).padStart(2, '0');
+                          return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
+                        })}
+                      </select>
+                    </div>
+                    <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">
+                      2026
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Alternative end date — 2026</h4>
+                  <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
+                    <div className="flex flex-col gap-[7px]">
+                      <FieldLabel>Day</FieldLabel>
+                      <select className={selectClass} style={selectBgStyle} value={data.end_day2} onChange={e => onChange('end_day2', e.target.value)}>
+                        <option value="">—</option>
+                        {days.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
+                      </select>
+                    </div>
+                    <div className="flex flex-col gap-[7px]">
+                      <FieldLabel>Month</FieldLabel>
+                      <select className={selectClass} style={selectBgStyle} value={data.end_month2} onChange={e => onChange('end_month2', e.target.value)}>
+                        <option value="">— Month —</option>
+                        {MONTHS_LIST.map((m, i) => {
+                          const num = String(i + 1).padStart(2, '0');
+                          return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
+                        })}
+                      </select>
+                    </div>
+                    <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">
+                      2026
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             <div className="grid grid-cols-1 gap-5 mt-5">
               <div className="flex flex-col gap-[7px]">
