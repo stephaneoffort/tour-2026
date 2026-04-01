@@ -89,6 +89,67 @@ function PersonBlock({
   );
 }
 
+function DateRow({
+  startDayField, startMonthField, endDayField, endMonthField,
+  data, onChange, days, required = false,
+}: {
+  startDayField: keyof TourFormData; startMonthField: keyof TourFormData;
+  endDayField: keyof TourFormData; endMonthField: keyof TourFormData;
+  data: TourFormData; onChange: (f: keyof TourFormData, v: string) => void;
+  days: string[]; required?: boolean;
+}) {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+      <div>
+        <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Start date — 2026</h4>
+        <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
+          <div className="flex flex-col gap-[7px]">
+            <FieldLabel>Day</FieldLabel>
+            <select className={selectClass} style={selectBgStyle} value={data[startDayField]} onChange={e => onChange(startDayField, e.target.value)} required={required}>
+              <option value="">—</option>
+              {days.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
+            </select>
+          </div>
+          <div className="flex flex-col gap-[7px]">
+            <FieldLabel>Month</FieldLabel>
+            <select className={selectClass} style={selectBgStyle} value={data[startMonthField]} onChange={e => onChange(startMonthField, e.target.value)} required={required}>
+              <option value="">— Month —</option>
+              {MONTHS_LIST.map((m, i) => {
+                const num = String(i + 1).padStart(2, '0');
+                return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
+              })}
+            </select>
+          </div>
+          <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">2026</div>
+        </div>
+      </div>
+      <div>
+        <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">End date — 2026</h4>
+        <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
+          <div className="flex flex-col gap-[7px]">
+            <FieldLabel>Day</FieldLabel>
+            <select className={selectClass} style={selectBgStyle} value={data[endDayField]} onChange={e => onChange(endDayField, e.target.value)} required={required}>
+              <option value="">—</option>
+              {days.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
+            </select>
+          </div>
+          <div className="flex flex-col gap-[7px]">
+            <FieldLabel>Month</FieldLabel>
+            <select className={selectClass} style={selectBgStyle} value={data[endMonthField]} onChange={e => onChange(endMonthField, e.target.value)} required={required}>
+              <option value="">— Month —</option>
+              {MONTHS_LIST.map((m, i) => {
+                const num = String(i + 1).padStart(2, '0');
+                return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
+              })}
+            </select>
+          </div>
+          <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">2026</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Index() {
   const [data, setData] = useState<TourFormData>(INITIAL);
   const [submitted, setSubmitted] = useState(false);
