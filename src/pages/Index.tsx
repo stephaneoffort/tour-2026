@@ -112,22 +112,23 @@ function DateRow({
   data: TourFormData; onChange: (f: keyof TourFormData, v: string) => void;
   required?: boolean;
 }) {
-  const startDays = getDaysInMonth(data[startMonthField] as string);
-  const endDays   = getDaysInMonth(data[endMonthField]   as string);
-
   const startDay   = data[startDayField]   as string;
   const startMonth = data[startMonthField] as string;
   const endDay     = data[endDayField]     as string;
   const endMonth   = data[endMonthField]   as string;
 
-  // Reset le jour si hors-plage après changement de mois
-  const handleMonthChange = (field: keyof TourFormData, value: string, dayField: keyof TourFormData) => {
-    onChange(field, value);
-    const days = getDaysInMonth(value);
-    const currentDay = data[dayField] as string;
-    if (currentDay && !days.includes(currentDay)) {
+  const startValue = startMonth && startDay ? `2026-${startMonth}-${startDay}` : '';
+  const endValue   = endMonth && endDay     ? `2026-${endMonth}-${endDay}`     : '';
+
+  const handleDateChange = (value: string, dayField: keyof TourFormData, monthField: keyof TourFormData) => {
+    if (!value) {
       onChange(dayField, '');
+      onChange(monthField, '');
+      return;
     }
+    const [, month, day] = value.split('-');
+    onChange(monthField, month);
+    onChange(dayField, day);
   };
 
   const invalid = isEndBeforeStart(startDay, startMonth, endDay, endMonth);
@@ -135,70 +136,40 @@ function DateRow({
   return (
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-        {/* Start date */}
         <div>
           <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Start date — 2026</h4>
-          <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
-            <div className="flex flex-col gap-[7px]">
-              <FieldLabel>Day</FieldLabel>
-              <select className={selectClass} style={selectBgStyle}
-                value={startDay}
-                onChange={e => onChange(startDayField, e.target.value)}
-                required={required}>
-                <option value="">—</option>
-                {startDays.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
-              </select>
-            </div>
-            <div className="flex flex-col gap-[7px]">
-              <FieldLabel>Month</FieldLabel>
-              <select className={selectClass} style={selectBgStyle}
-                value={startMonth}
-                onChange={e => handleMonthChange(startMonthField, e.target.value, startDayField)}
-                required={required}>
-                <option value="">— Month —</option>
-                {MONTHS_LIST.map((m, i) => {
-                  const num = String(i + 1).padStart(2, '0');
-                  return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
-                })}
-              </select>
-            </div>
-            <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">2026</div>
+          <div className="flex flex-col gap-[7px]">
+            <FieldLabel htmlFor={`date_${startDayField}`}>Date</FieldLabel>
+            <input
+              id={`date_${startDayField}`}
+              type="date"
+              min="2026-01-01"
+              max="2026-12-31"
+              value={startValue}
+              onChange={e => handleDateChange(e.target.value, startDayField, startMonthField)}
+              required={required}
+              className={inputClass}
+            />
           </div>
         </div>
-
-        {/* End date */}
         <div>
           <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">End date — 2026</h4>
-          <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
-            <div className="flex flex-col gap-[7px]">
-              <FieldLabel>Day</FieldLabel>
-              <select className={selectClass} style={selectBgStyle}
-                value={endDay}
-                onChange={e => onChange(endDayField, e.target.value)}
-                required={required}>
-                <option value="">—</option>
-                {endDays.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
-              </select>
-            </div>
-            <div className="flex flex-col gap-[7px]">
-              <FieldLabel>Month</FieldLabel>
-              <select className={selectClass} style={selectBgStyle}
-                value={endMonth}
-                onChange={e => handleMonthChange(endMonthField, e.target.value, endDayField)}
-                required={required}>
-                <option value="">— Month —</option>
-                {MONTHS_LIST.map((m, i) => {
-                  const num = String(i + 1).padStart(2, '0');
-                  return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
-                })}
-              </select>
-            </div>
-            <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">2026</div>
+          <div className="flex flex-col gap-[7px]">
+            <FieldLabel htmlFor={`date_${endDayField}`}>Date</FieldLabel>
+            <input
+              id={`date_${endDayField}`}
+              type="date"
+              min="2026-01-01"
+              max="2026-12-31"
+              value={endValue}
+              onChange={e => handleDateChange(e.target.value, endDayField, endMonthField)}
+              required={required}
+              className={inputClass}
+            />
           </div>
         </div>
       </div>
 
-      {/* Warning fin avant début */}
       {invalid && (
         <p className="mt-3 text-[0.78rem] text-red-400 flex items-center gap-1.5">
           <span>⚠</span> End date must be after the start date.
