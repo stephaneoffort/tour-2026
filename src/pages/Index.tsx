@@ -258,126 +258,50 @@ export default function Index() {
 
             {/* Plan A */}
             <div className="border border-secondary/25 border-t-2 border-t-gold px-5 pt-5 pb-3.5 mb-6 bg-navy/[0.07]">
-              <h3 className="font-display font-semibold text-[1.05rem] text-gold-light mb-1 tracking-[0.04em]">
-                Plan A
-              </h3>
+              <h3 className="font-display font-semibold text-[1.05rem] text-gold-light mb-1 tracking-[0.04em]">Plan A</h3>
               <p className="text-[1.15rem] text-gold-light font-display italic mb-5 tracking-[0.02em]">H.E. Karmapa comes to Europe</p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                <div>
-                  <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Start date — 2026</h4>
-                  <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
-                    <div className="flex flex-col gap-[7px]">
-                      <FieldLabel>Day</FieldLabel>
-                      <select className={selectClass} style={selectBgStyle} value={data.start_day} onChange={e => onChange('start_day', e.target.value)} required>
-                        <option value="">—</option>
-                        {days.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
-                      </select>
-                    </div>
-                    <div className="flex flex-col gap-[7px]">
-                      <FieldLabel>Month</FieldLabel>
-                      <select className={selectClass} style={selectBgStyle} value={data.start_month} onChange={e => onChange('start_month', e.target.value)} required>
-                        <option value="">— Month —</option>
-                        {MONTHS_LIST.map((m, i) => {
-                          const num = String(i + 1).padStart(2, '0');
-                          return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
-                        })}
-                      </select>
-                    </div>
-                    <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">
-                      2026
-                    </div>
-                  </div>
-                </div>
+              <p className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 1</p>
+              <DateRow startDayField="start_day" startMonthField="start_month" endDayField="end_day" endMonthField="end_month" data={data} onChange={onChange} days={days} required />
 
-                <div>
-                  <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">End date — 2026</h4>
-                  <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
-                    <div className="flex flex-col gap-[7px]">
-                      <FieldLabel>Day</FieldLabel>
-                      <select className={selectClass} style={selectBgStyle} value={data.end_day} onChange={e => onChange('end_day', e.target.value)} required>
-                        <option value="">—</option>
-                        {days.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
-                      </select>
-                    </div>
-                    <div className="flex flex-col gap-[7px]">
-                      <FieldLabel>Month</FieldLabel>
-                      <select className={selectClass} style={selectBgStyle} value={data.end_month} onChange={e => onChange('end_month', e.target.value)} required>
-                        <option value="">— Month —</option>
-                        {MONTHS_LIST.map((m, i) => {
-                          const num = String(i + 1).padStart(2, '0');
-                          return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
-                        })}
-                      </select>
-                    </div>
-                    <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">
-                      2026
-                    </div>
-                  </div>
-                </div>
+              <div className="mt-4 mb-2">
+                <span className="text-[0.82rem] text-gold italic underline underline-offset-2 hover:text-gold-light transition-colors cursor-pointer" onClick={() => {
+                  if (showAltA) { onChange('start_day_alt',''); onChange('start_month_alt',''); onChange('end_day_alt',''); onChange('end_month_alt',''); }
+                  setShowAltA(!showAltA);
+                }}>
+                  {showAltA ? '− Remove option 2' : '+ Add a second date option (optional)'}
+                </span>
               </div>
+              {showAltA && (
+                <div className="mt-3 border-l-2 border-gold/30 pl-4">
+                  <p className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 2</p>
+                  <DateRow startDayField="start_day_alt" startMonthField="start_month_alt" endDayField="end_day_alt" endMonthField="end_month_alt" data={data} onChange={onChange} days={days} />
+                </div>
+              )}
             </div>
 
             {/* Plan B */}
             <div className="border border-secondary/25 border-t-2 border-t-secondary px-5 pt-5 pb-3.5 mb-6 bg-navy/[0.07]">
-              <h3 className="font-display font-semibold text-[1.05rem] text-gold-light mb-1 tracking-[0.04em]">
-                Plan B
-              </h3>
+              <h3 className="font-display font-semibold text-[1.05rem] text-gold-light mb-1 tracking-[0.04em]">Plan B</h3>
               <p className="text-[1.15rem] text-gold-light font-display italic mb-5 tracking-[0.02em]">H.E. Karmapa does not come to Europe</p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                <div>
-                  <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Start date — 2026</h4>
-                  <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
-                    <div className="flex flex-col gap-[7px]">
-                      <FieldLabel>Day</FieldLabel>
-                      <select className={selectClass} style={selectBgStyle} value={data.start_day2} onChange={e => onChange('start_day2', e.target.value)}>
-                        <option value="">—</option>
-                        {days.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
-                      </select>
-                    </div>
-                    <div className="flex flex-col gap-[7px]">
-                      <FieldLabel>Month</FieldLabel>
-                      <select className={selectClass} style={selectBgStyle} value={data.start_month2} onChange={e => onChange('start_month2', e.target.value)}>
-                        <option value="">— Month —</option>
-                        {MONTHS_LIST.map((m, i) => {
-                          const num = String(i + 1).padStart(2, '0');
-                          return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
-                        })}
-                      </select>
-                    </div>
-                    <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">
-                      2026
-                    </div>
-                  </div>
-                </div>
+              <p className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 1</p>
+              <DateRow startDayField="start_day2" startMonthField="start_month2" endDayField="end_day2" endMonthField="end_month2" data={data} onChange={onChange} days={days} />
 
-                <div>
-                  <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">End date — 2026</h4>
-                  <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
-                    <div className="flex flex-col gap-[7px]">
-                      <FieldLabel>Day</FieldLabel>
-                      <select className={selectClass} style={selectBgStyle} value={data.end_day2} onChange={e => onChange('end_day2', e.target.value)}>
-                        <option value="">—</option>
-                        {days.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
-                      </select>
-                    </div>
-                    <div className="flex flex-col gap-[7px]">
-                      <FieldLabel>Month</FieldLabel>
-                      <select className={selectClass} style={selectBgStyle} value={data.end_month2} onChange={e => onChange('end_month2', e.target.value)}>
-                        <option value="">— Month —</option>
-                        {MONTHS_LIST.map((m, i) => {
-                          const num = String(i + 1).padStart(2, '0');
-                          return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
-                        })}
-                      </select>
-                    </div>
-                    <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">
-                      2026
-                    </div>
-                  </div>
-                </div>
+              <div className="mt-4 mb-2">
+                <span className="text-[0.82rem] text-gold italic underline underline-offset-2 hover:text-gold-light transition-colors cursor-pointer" onClick={() => {
+                  if (showAltB) { onChange('start_day2_alt',''); onChange('start_month2_alt',''); onChange('end_day2_alt',''); onChange('end_month2_alt',''); }
+                  setShowAltB(!showAltB);
+                }}>
+                  {showAltB ? '− Remove option 2' : '+ Add a second date option (optional)'}
+                </span>
               </div>
+              {showAltB && (
+                <div className="mt-3 border-l-2 border-gold/30 pl-4">
+                  <p className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 2</p>
+                  <DateRow startDayField="start_day2_alt" startMonthField="start_month2_alt" endDayField="end_day2_alt" endMonthField="end_month2_alt" data={data} onChange={onChange} days={days} />
+                </div>
+              )}
             </div>
 
             <div className="grid grid-cols-1 gap-5 mt-5">
