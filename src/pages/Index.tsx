@@ -17,7 +17,7 @@ const INITIAL: TourFormData = {
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="font-body font-semibold text-[0.72rem] tracking-[0.18em] uppercase text-gold py-2.5 px-[18px] bg-secondary/10 border-l-[3px] border-gold mb-7">
+    <h2 className="font-body font-semibold text-[0.85rem] tracking-[0.18em] uppercase text-gold py-3 px-[18px] bg-secondary/10 border-l-[3px] border-gold mb-7">
       {children}
     </h2>
   );
@@ -25,14 +25,14 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 
 function FieldLabel({ children, htmlFor }: { children: React.ReactNode; htmlFor?: string }) {
   return (
-    <label htmlFor={htmlFor} className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-bgray">
+    <label htmlFor={htmlFor} className="text-[0.82rem] font-semibold tracking-[0.1em] uppercase text-bgray">
       {children}
     </label>
   );
 }
 
 const inputClass =
-  "bg-foreground/5 border border-foreground/10 border-b-2 border-b-secondary text-foreground font-body text-[0.95rem] font-light px-3.5 py-2.5 outline-none transition-all duration-250 w-full rounded-sm focus:border-b-gold focus:bg-primary/[0.07] focus:shadow-[0_4px_18px_hsl(var(--primary)/0.08)] placeholder:text-foreground/25 placeholder:italic appearance-none";
+  "bg-foreground/5 border border-foreground/10 border-b-2 border-b-secondary text-foreground font-body text-base font-light px-3.5 py-3 outline-none transition-all duration-250 w-full rounded-sm focus:border-b-gold focus:bg-primary/[0.07] focus:shadow-[0_4px_18px_hsl(var(--primary)/0.08)] placeholder:text-foreground/25 placeholder:italic appearance-none";
 
 const selectClass = inputClass + " bg-no-repeat bg-[right_12px_center] pr-[34px] cursor-pointer";
 
@@ -52,8 +52,8 @@ function PersonBlock({
 
   return (
     <div className="border border-secondary/25 border-t-2 border-t-secondary px-5 pt-5 pb-3.5 mb-5 bg-navy/[0.07]">
-      <h3 className="font-display font-semibold text-[1.05rem] text-gold-light mb-[18px] tracking-[0.04em]">
-        Person responsible {num}{num === 2 && <span className="ml-2 text-[0.75rem] text-bgray/60 font-normal tracking-normal normal-case">(optional)</span>}
+      <h3 className="font-display font-semibold text-[1.15rem] text-gold-light mb-[18px] tracking-[0.04em]">
+        Person responsible {num}{num === 2 && <span className="ml-2 text-[0.85rem] text-bgray/60 font-normal tracking-normal normal-case">(optional)</span>}
       </h3>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
@@ -131,7 +131,7 @@ function DateRow({
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
         <div>
-          <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Start date — 2026</h4>
+          <h4 className="text-[0.82rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Start date — 2026</h4>
           <div className="flex flex-col gap-[7px]">
             <FieldLabel htmlFor={`date_${startDayField}`}>Date</FieldLabel>
             <input
@@ -147,7 +147,7 @@ function DateRow({
           </div>
         </div>
         <div>
-          <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">End date — 2026</h4>
+          <h4 className="text-[0.82rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">End date — 2026</h4>
           <div className="flex flex-col gap-[7px]">
             <FieldLabel htmlFor={`date_${endDayField}`}>Date</FieldLabel>
             <input
@@ -255,7 +255,7 @@ export default function Index() {
 
       <div className="max-w-[860px] mx-auto px-6 pt-12 pb-20">
         <div className="text-center mb-12">
-          <p className="font-display italic text-[1.15rem] text-bgray tracking-[0.03em]">
+          <p className="font-display italic text-[1.25rem] text-bgray tracking-[0.03em]">
             Please fill in the form below and submit your request for the 2026 tours.
           </p>
         </div>
@@ -302,15 +302,15 @@ export default function Index() {
 
             {/* Plan A */}
             <div className="border border-secondary/25 border-t-2 border-t-gold px-5 pt-5 pb-3.5 mb-6 bg-navy/[0.07]">
-              <h3 className="font-display font-semibold text-[1.05rem] text-gold-light mb-1 tracking-[0.04em]">Plan A</h3>
-              <p className="text-[1.15rem] text-gold-light font-display italic mb-5 tracking-[0.02em]"><p className="text-[1.15rem] text-gold-light font-display italic mb-5 tracking-[0.02em]">H.H. Karmapa comes to the European Center</p></p>
-              <p className="text-[0.82rem] text-bgray/70 mb-5 leading-relaxed">Please indicate your preferred dates for a visit of H.E. Jamgon Kongtrul Rinpoche to your center. You may add a second date option if your first choice is not available.</p>
+              <h3 className="font-display font-semibold text-[1.15rem] text-gold-light mb-1 tracking-[0.04em]">Plan A</h3>
+              <p className="text-[1.25rem] text-gold-light font-display italic mb-5 tracking-[0.02em]">H.H. Karmapa comes to the European Center</p>
+              <p className="text-[0.92rem] text-bgray/70 mb-5 leading-relaxed">Please indicate your preferred dates for a visit of H.E. Jamgon Kongtrul Rinpoche to your center. You may add a second date option if your first choice is not available.</p>
 
-              <p className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 1</p>
+              <p className="text-[0.82rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 1</p>
               <DateRow startDayField="start_day" startMonthField="start_month" endDayField="end_day" endMonthField="end_month" data={data} onChange={onChange} required />
 
               <div className="mt-4 mb-2">
-                <span className="text-[0.82rem] text-gold italic underline underline-offset-2 hover:text-gold-light transition-colors cursor-pointer" onClick={() => {
+                <span className="text-[0.92rem] text-gold italic underline underline-offset-2 hover:text-gold-light transition-colors cursor-pointer" onClick={() => {
                   if (showAltA) { onChange('start_day_alt',''); onChange('start_month_alt',''); onChange('end_day_alt',''); onChange('end_month_alt',''); }
                   setShowAltA(!showAltA);
                 }}>
@@ -319,7 +319,7 @@ export default function Index() {
               </div>
               {showAltA && (
                 <div className="mt-3 border-l-2 border-gold/30 pl-4">
-                  <p className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 2</p>
+                  <p className="text-[0.82rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 2</p>
                   <DateRow startDayField="start_day_alt" startMonthField="start_month_alt" endDayField="end_day_alt" endMonthField="end_month_alt" data={data} onChange={onChange} />
                 </div>
               )}
@@ -327,15 +327,15 @@ export default function Index() {
 
             {/* Plan B */}
             <div className="border border-secondary/25 border-t-2 border-t-secondary px-5 pt-5 pb-3.5 mb-6 bg-navy/[0.07]">
-              <h3 className="font-display font-semibold text-[1.05rem] text-gold-light mb-1 tracking-[0.04em]">Plan B</h3>
-              <p className="text-[1.15rem] text-gold-light font-display italic mb-5 tracking-[0.02em]"><p className="text-[1.15rem] text-gold-light font-display italic mb-5 tracking-[0.02em]">H.H. Karmapa does not come to the European Center</p></p>
-              <p className="text-[0.82rem] text-bgray/70 mb-5 leading-relaxed">Please indicate your preferred dates for a visit of H.E. Jamgon Kongtrul Rinpoche to your center in case H.H Karmapa Thaye Dorje cannot visit EC. You may add a second date option if your first choice is not available.</p>
+              <h3 className="font-display font-semibold text-[1.15rem] text-gold-light mb-1 tracking-[0.04em]">Plan B</h3>
+              <p className="text-[1.25rem] text-gold-light font-display italic mb-5 tracking-[0.02em]">H.H. Karmapa does not come to the European Center</p>
+              <p className="text-[0.92rem] text-bgray/70 mb-5 leading-relaxed">Please indicate your preferred dates for a visit of H.E. Jamgon Kongtrul Rinpoche to your center in case H.H Karmapa Thaye Dorje cannot visit EC. You may add a second date option if your first choice is not available.</p>
 
-              <p className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 1</p>
+              <p className="text-[0.82rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 1</p>
               <DateRow startDayField="start_day2" startMonthField="start_month2" endDayField="end_day2" endMonthField="end_month2" data={data} onChange={onChange} />
 
               <div className="mt-4 mb-2">
-                <span className="text-[0.82rem] text-gold italic underline underline-offset-2 hover:text-gold-light transition-colors cursor-pointer" onClick={() => {
+                <span className="text-[0.92rem] text-gold italic underline underline-offset-2 hover:text-gold-light transition-colors cursor-pointer" onClick={() => {
                   if (showAltB) { onChange('start_day2_alt',''); onChange('start_month2_alt',''); onChange('end_day2_alt',''); onChange('end_month2_alt',''); }
                   setShowAltB(!showAltB);
                 }}>
@@ -344,7 +344,7 @@ export default function Index() {
               </div>
               {showAltB && (
                 <div className="mt-3 border-l-2 border-gold/30 pl-4">
-                  <p className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 2</p>
+                  <p className="text-[0.82rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 2</p>
                   <DateRow startDayField="start_day2_alt" startMonthField="start_month2_alt" endDayField="end_day2_alt" endMonthField="end_month2_alt" data={data} onChange={onChange} />
                 </div>
               )}
@@ -352,15 +352,15 @@ export default function Index() {
 
             <div className="grid grid-cols-1 gap-5 mt-5">
               <div className="flex flex-col gap-[7px]">
-                <FieldLabel htmlFor="topics">Topic(s) of the course <span className="text-bgray/50 font-normal">(optional)</span></FieldLabel>
+                <FieldLabel htmlFor="topics">Topic(s) of the course <span className="text-bgray/50 font-normal text-[0.82rem]">(optional)</span></FieldLabel>
                 <textarea id="topics" className={inputClass + " resize-vertical min-h-[110px]"} value={data.topics} onChange={e => onChange('topics', e.target.value)} />
               </div>
               <div className="flex flex-col gap-[7px]">
-                <FieldLabel htmlFor="empowerments">Request for empowerment(s) <span className="text-bgray/50 font-normal">(optional)</span></FieldLabel>
+                <FieldLabel htmlFor="empowerments">Request for empowerment(s) <span className="text-bgray/50 font-normal text-[0.82rem]">(optional)</span></FieldLabel>
                 <textarea id="empowerments" className={inputClass + " resize-vertical min-h-[110px]"} value={data.empowerments} onChange={e => onChange('empowerments', e.target.value)} />
               </div>
               <div className="flex flex-col gap-[7px]">
-                <FieldLabel htmlFor="comments">Additional comments <span className="text-bgray/50 font-normal">(optional)</span></FieldLabel>
+                <FieldLabel htmlFor="comments">Additional comments <span className="text-bgray/50 font-normal text-[0.82rem]">(optional)</span></FieldLabel>
                 <textarea id="comments" className={inputClass + " resize-none overflow-hidden min-h-[44px]"} value={data.comments} onChange={e => onChange('comments', e.target.value)} />
               </div>
             </div>
@@ -372,7 +372,7 @@ export default function Index() {
               <div className={`w-5 h-5 border-2 rounded-sm flex items-center justify-center transition-all ${wantsCopy ? 'bg-gold border-gold' : 'border-bgray/50 bg-foreground/5'}`}>
                 {wantsCopy && <span className="text-navy-deep text-xs font-bold">✓</span>}
               </div>
-              <span className="text-[0.85rem] text-bgray">I would like to receive a copy of the PDF by email</span>
+              <span className="text-[0.95rem] text-bgray">I would like to receive a copy of the PDF by email</span>
             </div>
             {wantsCopy && (
               <div className="mt-4 ml-8 max-w-sm">
@@ -410,7 +410,7 @@ export default function Index() {
                 {generating ? 'Sending…' : 'Send'}
               </span>
             </button>
-            <p className="mt-[18px] text-[0.85rem] text-bgray/90">
+            <p className="mt-[18px] text-[0.95rem] text-bgray/90">
               A PDF summary will be generated and sent to tour2026@jamgon-kongtrul.org.
             </p>
           </div>
