@@ -192,83 +192,78 @@ export default function Index() {
           <div className="mb-10 animate-fade-up" style={{ animationDelay: '0.25s' }}>
             <SectionTitle>Course Details</SectionTitle>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-5">
-              {/* Start date */}
-              <div>
-                <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Start date — 2026</h4>
-                <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
-                  <div className="flex flex-col gap-[7px]">
-                    <FieldLabel>Day</FieldLabel>
-                    <select className={selectClass} style={selectBgStyle} value={data.start_day} onChange={e => onChange('start_day', e.target.value)} required>
-                      <option value="">—</option>
-                      {days.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
-                    </select>
-                  </div>
-                  <div className="flex flex-col gap-[7px]">
-                    <FieldLabel>Month</FieldLabel>
-                    <select className={selectClass} style={selectBgStyle} value={data.start_month} onChange={e => onChange('start_month', e.target.value)} required>
-                      <option value="">— Month —</option>
-                      {MONTHS_LIST.map((m, i) => {
-                        const num = String(i + 1).padStart(2, '0');
-                        return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
-                      })}
-                    </select>
-                  </div>
-                  <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">
-                    2026
-                  </div>
-                </div>
-              </div>
+            {/* Plan A */}
+            <div className="border border-secondary/25 border-t-2 border-t-gold px-5 pt-5 pb-3.5 mb-6 bg-navy/[0.07]">
+              <h3 className="font-display font-semibold text-[1.05rem] text-gold-light mb-1 tracking-[0.04em]">
+                Plan A
+              </h3>
+              <p className="text-[0.78rem] text-bgray italic mb-5">H.E. Karmapa comes to Europe</p>
 
-              {/* End date */}
-              <div>
-                <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">End date — 2026</h4>
-                <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
-                  <div className="flex flex-col gap-[7px]">
-                    <FieldLabel>Day</FieldLabel>
-                    <select className={selectClass} style={selectBgStyle} value={data.end_day} onChange={e => onChange('end_day', e.target.value)} required>
-                      <option value="">—</option>
-                      {days.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
-                    </select>
-                  </div>
-                  <div className="flex flex-col gap-[7px]">
-                    <FieldLabel>Month</FieldLabel>
-                    <select className={selectClass} style={selectBgStyle} value={data.end_month} onChange={e => onChange('end_month', e.target.value)} required>
-                      <option value="">— Month —</option>
-                      {MONTHS_LIST.map((m, i) => {
-                        const num = String(i + 1).padStart(2, '0');
-                        return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
-                      })}
-                    </select>
-                  </div>
-                  <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">
-                    2026
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Second date proposal */}
-            <div className="mt-6 mb-2">
-              <div className="flex items-center gap-3 cursor-pointer mb-4" onClick={() => {
-                if (showDates2) {
-                  onChange('start_day2', '');
-                  onChange('start_month2', '');
-                  onChange('end_day2', '');
-                  onChange('end_month2', '');
-                }
-                setShowDates2(!showDates2);
-              }}>
-                <span className="text-[0.82rem] text-gold italic underline underline-offset-2 hover:text-gold-light transition-colors">
-                  {showDates2 ? '− Remove second date proposal' : '+ Add a second date proposal (optional)'}
-                </span>
-              </div>
-            </div>
-
-            {showDates2 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-5 border border-secondary/20 p-5 bg-navy/[0.04]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 <div>
-                  <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Alternative start date — 2026</h4>
+                  <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Start date — 2026</h4>
+                  <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
+                    <div className="flex flex-col gap-[7px]">
+                      <FieldLabel>Day</FieldLabel>
+                      <select className={selectClass} style={selectBgStyle} value={data.start_day} onChange={e => onChange('start_day', e.target.value)} required>
+                        <option value="">—</option>
+                        {days.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
+                      </select>
+                    </div>
+                    <div className="flex flex-col gap-[7px]">
+                      <FieldLabel>Month</FieldLabel>
+                      <select className={selectClass} style={selectBgStyle} value={data.start_month} onChange={e => onChange('start_month', e.target.value)} required>
+                        <option value="">— Month —</option>
+                        {MONTHS_LIST.map((m, i) => {
+                          const num = String(i + 1).padStart(2, '0');
+                          return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
+                        })}
+                      </select>
+                    </div>
+                    <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">
+                      2026
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">End date — 2026</h4>
+                  <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
+                    <div className="flex flex-col gap-[7px]">
+                      <FieldLabel>Day</FieldLabel>
+                      <select className={selectClass} style={selectBgStyle} value={data.end_day} onChange={e => onChange('end_day', e.target.value)} required>
+                        <option value="">—</option>
+                        {days.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
+                      </select>
+                    </div>
+                    <div className="flex flex-col gap-[7px]">
+                      <FieldLabel>Month</FieldLabel>
+                      <select className={selectClass} style={selectBgStyle} value={data.end_month} onChange={e => onChange('end_month', e.target.value)} required>
+                        <option value="">— Month —</option>
+                        {MONTHS_LIST.map((m, i) => {
+                          const num = String(i + 1).padStart(2, '0');
+                          return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
+                        })}
+                      </select>
+                    </div>
+                    <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">
+                      2026
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Plan B */}
+            <div className="border border-secondary/25 border-t-2 border-t-secondary px-5 pt-5 pb-3.5 mb-6 bg-navy/[0.07]">
+              <h3 className="font-display font-semibold text-[1.05rem] text-gold-light mb-1 tracking-[0.04em]">
+                Plan B
+              </h3>
+              <p className="text-[0.78rem] text-bgray italic mb-5">H.E. Karmapa does not come to Europe</p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                <div>
+                  <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Start date — 2026</h4>
                   <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
                     <div className="flex flex-col gap-[7px]">
                       <FieldLabel>Day</FieldLabel>
@@ -294,7 +289,7 @@ export default function Index() {
                 </div>
 
                 <div>
-                  <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Alternative end date — 2026</h4>
+                  <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">End date — 2026</h4>
                   <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
                     <div className="flex flex-col gap-[7px]">
                       <FieldLabel>Day</FieldLabel>
@@ -319,7 +314,7 @@ export default function Index() {
                   </div>
                 </div>
               </div>
-            )}
+            </div>
 
             <div className="grid grid-cols-1 gap-5 mt-5">
               <div className="flex flex-col gap-[7px]">

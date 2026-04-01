@@ -129,8 +129,8 @@ export function generatePDF(obj: TourFormData): jsPDF {
   }
   separator();
 
-  // Section 4
-  section('Course Details');
+  // Section 4 — Plan A
+  section('Plan A — H.E. Karmapa comes to Europe');
   row('Start date',
     obj.start_day && obj.start_month
       ? obj.start_day + ' / ' + MONTHS_LIST[parseInt(obj.start_month) - 1] + ' 2026'
@@ -139,23 +139,26 @@ export function generatePDF(obj: TourFormData): jsPDF {
     obj.end_day && obj.end_month
       ? obj.end_day + ' / ' + MONTHS_LIST[parseInt(obj.end_month) - 1] + ' 2026'
       : '—');
+  separator();
 
-  const hasAlt = obj.start_day2 || obj.start_month2 || obj.end_day2 || obj.end_month2;
-  if (hasAlt) {
-    y += 4;
-    doc.setTextColor(...BLUE);
-    doc.setFont('helvetica', 'italic');
-    doc.setFontSize(7.5);
-    doc.text('Alternative dates (2nd proposal)', ML + 4, y + 3);
-    y += 6;
-    row('Alt. start date',
+  // Section 5 — Plan B
+  section('Plan B — H.E. Karmapa does not come to Europe');
+  const hasB = obj.start_day2 || obj.start_month2 || obj.end_day2 || obj.end_month2;
+  if (hasB) {
+    row('Start date',
       obj.start_day2 && obj.start_month2
         ? obj.start_day2 + ' / ' + MONTHS_LIST[parseInt(obj.start_month2) - 1] + ' 2026'
-        : '—', 4);
-    row('Alt. end date',
+        : '—');
+    row('End date',
       obj.end_day2 && obj.end_month2
         ? obj.end_day2 + ' / ' + MONTHS_LIST[parseInt(obj.end_month2) - 1] + ' 2026'
-        : '—', 4);
+        : '—');
+  } else {
+    doc.setTextColor(...DGRAY);
+    doc.setFont('helvetica', 'italic');
+    doc.setFontSize(8);
+    doc.text('Not specified', ML + 4, y + 4);
+    y += 9;
   }
 
   y += 2;
