@@ -9,7 +9,9 @@ const INITIAL: TourFormData = {
   p1_firstname: '', p1_lastname: '', p1_code: '', p1_phone: '', p1_email: '',
   p2_firstname: '', p2_lastname: '', p2_code: '', p2_phone: '', p2_email: '',
   start_day: '', start_month: '', end_day: '', end_month: '',
+  start_day_alt: '', start_month_alt: '', end_day_alt: '', end_month_alt: '',
   start_day2: '', start_month2: '', end_day2: '', end_month2: '',
+  start_day2_alt: '', start_month2_alt: '', end_day2_alt: '', end_month2_alt: '',
   topics: '', empowerments: '', comments: '',
 };
 
