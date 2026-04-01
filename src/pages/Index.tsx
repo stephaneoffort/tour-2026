@@ -259,7 +259,7 @@ export default function Index() {
               <h3 className="font-display font-semibold text-[1.05rem] text-gold-light mb-1 tracking-[0.04em]">
                 Plan B
               </h3>
-              <p className="text-[0.95rem] text-foreground/60 italic mb-5 font-display">H.E. Karmapa does not come to Europe</p>
+              <p className="text-[1.15rem] text-gold-light font-display italic mb-5 tracking-[0.02em]">H.E. Karmapa does not come to Europe</p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 <div>
