@@ -148,7 +148,7 @@ export function generatePDF(obj: TourFormData): jsPDF {
   separator();
 
   // Section 5 — Plan B
-  section('section('Plan B — H.H. Karmapa does not come to the European Center');');
+  section('Plan B \u2014 H.H. Karmapa does not come to the European Center');
   const hasB = obj.start_day2 || obj.start_month2 || obj.end_day2 || obj.end_month2;
   if (hasB) {
     row('Option 1 — Start', fmtDate(obj.start_day2, obj.start_month2));
