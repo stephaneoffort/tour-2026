@@ -385,7 +385,7 @@ export default function Index() {
 
             <div className="grid grid-cols-1 gap-5 mt-5">
               <div className="flex flex-col gap-[7px]">
-                <FieldLabel>Topic(s) of the course</FieldLabel>
+                <FieldLabel>Topic(s) of the course <span className="text-bgray/50 font-normal">(optional)</span></FieldLabel>
                 <textarea className={inputClass + " resize-vertical min-h-[110px]"} value={data.topics} onChange={e => onChange('topics', e.target.value)} />
               </div>
               <div className="flex flex-col gap-[7px]">
