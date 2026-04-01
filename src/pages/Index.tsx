@@ -372,7 +372,7 @@ export default function Index() {
               <div className={`w-5 h-5 border-2 rounded-sm flex items-center justify-center transition-all ${wantsCopy ? 'bg-gold border-gold' : 'border-bgray/50 bg-foreground/5'}`}>
                 {wantsCopy && <span className="text-navy-deep text-xs font-bold">✓</span>}
               </div>
-              <span className="text-[0.85rem] text-bgray">I would like to receive a copy of the PDF by email</span>
+              <span className="text-[0.95rem] text-bgray">I would like to receive a copy of the PDF by email</span>
             </div>
             {wantsCopy && (
               <div className="mt-4 ml-8 max-w-sm">
