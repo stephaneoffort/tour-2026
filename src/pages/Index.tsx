@@ -147,7 +147,7 @@ function DateRow({
           </div>
         </div>
         <div>
-          <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">End date — 2026</h4>
+          <h4 className="text-[0.82rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">End date — 2026</h4>
           <div className="flex flex-col gap-[7px]">
             <FieldLabel htmlFor={`date_${endDayField}`}>Date</FieldLabel>
             <input
