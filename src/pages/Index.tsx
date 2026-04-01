@@ -58,31 +58,31 @@ function PersonBlock({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
         <div className="flex flex-col gap-[7px]">
-          <FieldLabel>First name</FieldLabel>
-          <input className={inputClass} value={data[`${prefix}firstname`]} onChange={e => onChange(`${prefix}firstname`, e.target.value)} required={required} />
+          <FieldLabel htmlFor={`${prefix}firstname`}>First name</FieldLabel>
+          <input id={`${prefix}firstname`} className={inputClass} value={data[`${prefix}firstname`]} onChange={e => onChange(`${prefix}firstname`, e.target.value)} required={required} />
         </div>
         <div className="flex flex-col gap-[7px]">
-          <FieldLabel>Last name</FieldLabel>
-          <input className={inputClass} value={data[`${prefix}lastname`]} onChange={e => onChange(`${prefix}lastname`, e.target.value)} required={required} />
+          <FieldLabel htmlFor={`${prefix}lastname`}>Last name</FieldLabel>
+          <input id={`${prefix}lastname`} className={inputClass} value={data[`${prefix}lastname`]} onChange={e => onChange(`${prefix}lastname`, e.target.value)} required={required} />
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
         <div className="flex flex-col gap-[7px]">
-          <FieldLabel>Phone</FieldLabel>
+          <FieldLabel htmlFor={`${prefix}phone`}>Phone</FieldLabel>
           <div className="grid grid-cols-[120px_1fr] gap-2 sm:grid-cols-[180px_1fr] sm:gap-5">
-            <select className={selectClass} style={selectBgStyle} value={data[`${prefix}code`]} onChange={e => onChange(`${prefix}code`, e.target.value)}>
+            <select id={`${prefix}code`} className={selectClass} style={selectBgStyle} value={data[`${prefix}code`]} onChange={e => onChange(`${prefix}code`, e.target.value)}>
               <option value="">Code</option>
               {COUNTRY_CODES.map(([code, country]) => (
                 <option key={code} value={code} className="bg-navy text-foreground">{code}  {country}</option>
               ))}
             </select>
-            <input className={inputClass} value={data[`${prefix}phone`]} onChange={e => onChange(`${prefix}phone`, e.target.value)} />
+            <input id={`${prefix}phone`} className={inputClass} value={data[`${prefix}phone`]} onChange={e => onChange(`${prefix}phone`, e.target.value)} />
           </div>
         </div>
         <div className="flex flex-col gap-[7px]">
-          <FieldLabel>Email</FieldLabel>
-          <input type="email" className={inputClass} placeholder="@example.com" value={data[`${prefix}email`]} onChange={e => onChange(`${prefix}email`, e.target.value)} required={required} />
+          <FieldLabel htmlFor={`${prefix}email`}>Email</FieldLabel>
+          <input id={`${prefix}email`} type="email" className={inputClass} placeholder="@example.com" value={data[`${prefix}email`]} onChange={e => onChange(`${prefix}email`, e.target.value)} required={required} />
         </div>
       </div>
     </div>
