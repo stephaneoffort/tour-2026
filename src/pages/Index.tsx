@@ -301,18 +301,18 @@ export default function Index() {
             <SectionTitle>Center Information</SectionTitle>
             <div className="grid grid-cols-1 gap-5 mb-5">
               <div className="flex flex-col gap-[7px]">
-                <FieldLabel>Name of the center</FieldLabel>
-                <input className={inputClass} value={data.center_name} onChange={e => onChange('center_name', e.target.value)} required />
+                <FieldLabel htmlFor="center_name">Name of the center</FieldLabel>
+                <input id="center_name" className={inputClass} value={data.center_name} onChange={e => onChange('center_name', e.target.value)} required />
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div className="flex flex-col gap-[7px]">
-                <FieldLabel>City</FieldLabel>
-                <input className={inputClass} value={data.city} onChange={e => onChange('city', e.target.value)} required />
+                <FieldLabel htmlFor="city">City</FieldLabel>
+                <input id="city" className={inputClass} value={data.city} onChange={e => onChange('city', e.target.value)} required />
               </div>
               <div className="flex flex-col gap-[7px]">
-                <FieldLabel>Country</FieldLabel>
-                <select className={selectClass} style={selectBgStyle} value={data.country} onChange={e => onChange('country', e.target.value)} required>
+                <FieldLabel htmlFor="country">Country</FieldLabel>
+                <select id="country" className={selectClass} style={selectBgStyle} value={data.country} onChange={e => onChange('country', e.target.value)} required>
                   <option value="">— Select a country —</option>
                   {COUNTRIES.map(c => <option key={c} value={c} className="bg-navy text-foreground">{c}</option>)}
                 </select>
