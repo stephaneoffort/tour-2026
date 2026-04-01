@@ -410,8 +410,9 @@ export default function Index() {
             {wantsCopy && (
               <div className="mt-4 ml-8 max-w-sm">
                 <div className="flex flex-col gap-[7px]">
-                  <FieldLabel>Your email address</FieldLabel>
+                  <FieldLabel htmlFor="copy_email">Your email address</FieldLabel>
                   <input
+                    id="copy_email"
                     type="email"
                     className={inputClass}
                     placeholder="your@email.com"
