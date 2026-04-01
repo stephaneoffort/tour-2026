@@ -23,9 +23,9 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   );
 }
 
-function FieldLabel({ children }: { children: React.ReactNode }) {
+function FieldLabel({ children, htmlFor }: { children: React.ReactNode; htmlFor?: string }) {
   return (
-    <label className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-bgray">
+    <label htmlFor={htmlFor} className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-bgray">
       {children}
     </label>
   );
