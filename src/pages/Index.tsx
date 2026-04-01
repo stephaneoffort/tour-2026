@@ -131,7 +131,7 @@ function DateRow({
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
         <div>
-          <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Start date — 2026</h4>
+          <h4 className="text-[0.82rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Start date — 2026</h4>
           <div className="flex flex-col gap-[7px]">
             <FieldLabel htmlFor={`date_${startDayField}`}>Date</FieldLabel>
             <input
