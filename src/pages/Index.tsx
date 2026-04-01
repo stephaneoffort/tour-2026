@@ -255,7 +255,7 @@ export default function Index() {
 
       <div className="max-w-[860px] mx-auto px-6 pt-12 pb-20">
         <div className="text-center mb-12">
-          <p className="font-display italic text-[1.15rem] text-bgray tracking-[0.03em]">
+          <p className="font-display italic text-[1.25rem] text-bgray tracking-[0.03em]">
             Please fill in the form below and submit your request for the 2026 tours.
           </p>
         </div>
