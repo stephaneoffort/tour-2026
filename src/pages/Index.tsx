@@ -4,6 +4,20 @@ import { COUNTRY_CODES, COUNTRIES, MONTHS_LIST, type TourFormData } from '@/lib/
 import { downloadPDF, generatePDF } from '@/lib/generatePdf';
 import { supabase } from '@/integrations/supabase/client';
 
+function getDaysInMonth(month: string): string[] {
+  if (!month) return Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
+  const m = parseInt(month, 10);
+  const daysCount = new Date(2026, m, 0).getDate();
+  return Array.from({ length: daysCount }, (_, i) => String(i + 1).padStart(2, '0'));
+}
+
+function isEndBeforeStart(sd: string, sm: string, ed: string, em: string): boolean {
+  if (!sd || !sm || !ed || !em) return false;
+  const start = parseInt(sm) * 100 + parseInt(sd);
+  const end = parseInt(em) * 100 + parseInt(ed);
+  return end < start;
+}
+
 const INITIAL: TourFormData = {
   center_name: '', city: '', country: '',
   p1_firstname: '', p1_lastname: '', p1_code: '', p1_phone: '', p1_email: '',
