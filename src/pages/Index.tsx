@@ -360,7 +360,7 @@ export default function Index() {
                 <textarea id="empowerments" className={inputClass + " resize-vertical min-h-[110px]"} value={data.empowerments} onChange={e => onChange('empowerments', e.target.value)} />
               </div>
               <div className="flex flex-col gap-[7px]">
-                <FieldLabel htmlFor="comments">Additional comments <span className="text-bgray/50 font-normal">(optional)</span></FieldLabel>
+                <FieldLabel htmlFor="comments">Additional comments <span className="text-bgray/50 font-normal text-[0.82rem]">(optional)</span></FieldLabel>
                 <textarea id="comments" className={inputClass + " resize-none overflow-hidden min-h-[44px]"} value={data.comments} onChange={e => onChange('comments', e.target.value)} />
               </div>
             </div>
