@@ -51,10 +51,18 @@ export interface TourFormData {
   start_month: string;
   end_day: string;
   end_month: string;
+  start_day_alt: string;
+  start_month_alt: string;
+  end_day_alt: string;
+  end_month_alt: string;
   start_day2: string;
   start_month2: string;
   end_day2: string;
   end_month2: string;
+  start_day2_alt: string;
+  start_month2_alt: string;
+  end_day2_alt: string;
+  end_month2_alt: string;
   topics: string;
   empowerments: string;
   comments: string;
