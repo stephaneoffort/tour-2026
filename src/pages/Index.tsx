@@ -17,7 +17,7 @@ const INITIAL: TourFormData = {
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="font-body font-semibold text-[0.72rem] tracking-[0.18em] uppercase text-gold py-2.5 px-[18px] bg-secondary/10 border-l-[3px] border-gold mb-7">
+    <h2 className="font-body font-semibold text-[0.85rem] tracking-[0.18em] uppercase text-gold py-3 px-[18px] bg-secondary/10 border-l-[3px] border-gold mb-7">
       {children}
     </h2>
   );
