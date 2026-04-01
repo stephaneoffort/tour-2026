@@ -91,61 +91,105 @@ function PersonBlock({
 
 function DateRow({
   startDayField, startMonthField, endDayField, endMonthField,
-  data, onChange, days, required = false,
+  data, onChange, required = false,
 }: {
   startDayField: keyof TourFormData; startMonthField: keyof TourFormData;
   endDayField: keyof TourFormData; endMonthField: keyof TourFormData;
   data: TourFormData; onChange: (f: keyof TourFormData, v: string) => void;
-  days: string[]; required?: boolean;
+  required?: boolean;
 }) {
+  const startDays = getDaysInMonth(data[startMonthField] as string);
+  const endDays   = getDaysInMonth(data[endMonthField]   as string);
+
+  const startDay   = data[startDayField]   as string;
+  const startMonth = data[startMonthField] as string;
+  const endDay     = data[endDayField]     as string;
+  const endMonth   = data[endMonthField]   as string;
+
+  // Reset le jour si hors-plage après changement de mois
+  const handleMonthChange = (field: keyof TourFormData, value: string, dayField: keyof TourFormData) => {
+    onChange(field, value);
+    const days = getDaysInMonth(value);
+    const currentDay = data[dayField] as string;
+    if (currentDay && !days.includes(currentDay)) {
+      onChange(dayField, '');
+    }
+  };
+
+  const invalid = isEndBeforeStart(startDay, startMonth, endDay, endMonth);
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-      <div>
-        <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Start date — 2026</h4>
-        <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
-          <div className="flex flex-col gap-[7px]">
-            <FieldLabel>Day</FieldLabel>
-            <select className={selectClass} style={selectBgStyle} value={data[startDayField]} onChange={e => onChange(startDayField, e.target.value)} required={required}>
-              <option value="">—</option>
-              {days.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
-            </select>
+    <div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        {/* Start date */}
+        <div>
+          <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">Start date — 2026</h4>
+          <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
+            <div className="flex flex-col gap-[7px]">
+              <FieldLabel>Day</FieldLabel>
+              <select className={selectClass} style={selectBgStyle}
+                value={startDay}
+                onChange={e => onChange(startDayField, e.target.value)}
+                required={required}>
+                <option value="">—</option>
+                {startDays.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
+              </select>
+            </div>
+            <div className="flex flex-col gap-[7px]">
+              <FieldLabel>Month</FieldLabel>
+              <select className={selectClass} style={selectBgStyle}
+                value={startMonth}
+                onChange={e => handleMonthChange(startMonthField, e.target.value, startDayField)}
+                required={required}>
+                <option value="">— Month —</option>
+                {MONTHS_LIST.map((m, i) => {
+                  const num = String(i + 1).padStart(2, '0');
+                  return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
+                })}
+              </select>
+            </div>
+            <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">2026</div>
           </div>
-          <div className="flex flex-col gap-[7px]">
-            <FieldLabel>Month</FieldLabel>
-            <select className={selectClass} style={selectBgStyle} value={data[startMonthField]} onChange={e => onChange(startMonthField, e.target.value)} required={required}>
-              <option value="">— Month —</option>
-              {MONTHS_LIST.map((m, i) => {
-                const num = String(i + 1).padStart(2, '0');
-                return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
-              })}
-            </select>
+        </div>
+
+        {/* End date */}
+        <div>
+          <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">End date — 2026</h4>
+          <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
+            <div className="flex flex-col gap-[7px]">
+              <FieldLabel>Day</FieldLabel>
+              <select className={selectClass} style={selectBgStyle}
+                value={endDay}
+                onChange={e => onChange(endDayField, e.target.value)}
+                required={required}>
+                <option value="">—</option>
+                {endDays.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
+              </select>
+            </div>
+            <div className="flex flex-col gap-[7px]">
+              <FieldLabel>Month</FieldLabel>
+              <select className={selectClass} style={selectBgStyle}
+                value={endMonth}
+                onChange={e => handleMonthChange(endMonthField, e.target.value, endDayField)}
+                required={required}>
+                <option value="">— Month —</option>
+                {MONTHS_LIST.map((m, i) => {
+                  const num = String(i + 1).padStart(2, '0');
+                  return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
+                })}
+              </select>
+            </div>
+            <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">2026</div>
           </div>
-          <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">2026</div>
         </div>
       </div>
-      <div>
-        <h4 className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-gold mb-3">End date — 2026</h4>
-        <div className="grid grid-cols-[80px_1fr_70px] gap-5 items-end max-sm:grid-cols-1">
-          <div className="flex flex-col gap-[7px]">
-            <FieldLabel>Day</FieldLabel>
-            <select className={selectClass} style={selectBgStyle} value={data[endDayField]} onChange={e => onChange(endDayField, e.target.value)} required={required}>
-              <option value="">—</option>
-              {days.map(d => <option key={d} value={d} className="bg-navy text-foreground">{d}</option>)}
-            </select>
-          </div>
-          <div className="flex flex-col gap-[7px]">
-            <FieldLabel>Month</FieldLabel>
-            <select className={selectClass} style={selectBgStyle} value={data[endMonthField]} onChange={e => onChange(endMonthField, e.target.value)} required={required}>
-              <option value="">— Month —</option>
-              {MONTHS_LIST.map((m, i) => {
-                const num = String(i + 1).padStart(2, '0');
-                return <option key={num} value={num} className="bg-navy text-foreground">{num} — {m}</option>;
-              })}
-            </select>
-          </div>
-          <div className="flex items-center justify-center bg-secondary/[0.18] border border-secondary/40 rounded-sm text-gold font-semibold text-base tracking-[0.06em] py-2.5 px-3.5 whitespace-nowrap mt-[26px]">2026</div>
-        </div>
-      </div>
+
+      {/* Warning fin avant début */}
+      {invalid && (
+        <p className="mt-3 text-[0.78rem] text-red-400 flex items-center gap-1.5">
+          <span>⚠</span> End date must be after the start date.
+        </p>
+      )}
     </div>
   );
 }
@@ -167,6 +211,27 @@ export default function Index() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+   const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  if (!formRef.current?.checkValidity()) {
+    formRef.current?.reportValidity();
+    return;
+  }
+
+  // ← AJOUT : bloquer si une des paires de dates est incohérente
+  const datePairs: [keyof TourFormData, keyof TourFormData, keyof TourFormData, keyof TourFormData][] = [
+    ['start_day', 'start_month', 'end_day', 'end_month'],
+    ['start_day_alt', 'start_month_alt', 'end_day_alt', 'end_month_alt'],
+    ['start_day2', 'start_month2', 'end_day2', 'end_month2'],
+    ['start_day2_alt', 'start_month2_alt', 'end_day2_alt', 'end_month2_alt'],
+  ];
+  const hasInvalidDate = datePairs.some(([sd, sm, ed, em]) =>
+    isEndBeforeStart(data[sd] as string, data[sm] as string, data[ed] as string, data[em] as string)
+  );
+  if (hasInvalidDate) {
+    alert('Please check your dates — end date cannot be before start date.');
+    return;
+  } 
     if (!formRef.current?.checkValidity()) {
       formRef.current?.reportValidity();
       return;
@@ -203,7 +268,7 @@ export default function Index() {
     if (lastData.current) downloadPDF(lastData.current);
   };
 
-  const days = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
+ 
 
   return (
     <div className="min-h-screen bg-background">
@@ -262,7 +327,7 @@ export default function Index() {
               <p className="text-[1.15rem] text-gold-light font-display italic mb-5 tracking-[0.02em]">H.E. Karmapa comes to the European Center</p>
 
               <p className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 1</p>
-              <DateRow startDayField="start_day" startMonthField="start_month" endDayField="end_day" endMonthField="end_month" data={data} onChange={onChange} days={days} required />
+              <DateRow startDayField="start_day" startMonthField="start_month" endDayField="end_day" endMonthField="end_month" data={data} onChange={onChange} required />
 
               <div className="mt-4 mb-2">
                 <span className="text-[0.82rem] text-gold italic underline underline-offset-2 hover:text-gold-light transition-colors cursor-pointer" onClick={() => {
@@ -275,7 +340,7 @@ export default function Index() {
               {showAltA && (
                 <div className="mt-3 border-l-2 border-gold/30 pl-4">
                   <p className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 2</p>
-                  <DateRow startDayField="start_day_alt" startMonthField="start_month_alt" endDayField="end_day_alt" endMonthField="end_month_alt" data={data} onChange={onChange} days={days} />
+                  <DateRow startDayField="start_day_alt" startMonthField="start_month_alt" endDayField="end_day_alt" endMonthField="end_month_alt" data={data} onChange={onChange} />
                 </div>
               )}
             </div>
@@ -286,7 +351,7 @@ export default function Index() {
               <p className="text-[1.15rem] text-gold-light font-display italic mb-5 tracking-[0.02em]">H.E. Karmapa does not come to the European Center</p>
 
               <p className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 1</p>
-              <DateRow startDayField="start_day2" startMonthField="start_month2" endDayField="end_day2" endMonthField="end_month2" data={data} onChange={onChange} days={days} />
+              <DateRow startDayField="start_day2" startMonthField="start_month2" endDayField="end_day2" endMonthField="end_month2" data={data} onChange={onChange} />
 
               <div className="mt-4 mb-2">
                 <span className="text-[0.82rem] text-gold italic underline underline-offset-2 hover:text-gold-light transition-colors cursor-pointer" onClick={() => {
@@ -299,7 +364,7 @@ export default function Index() {
               {showAltB && (
                 <div className="mt-3 border-l-2 border-gold/30 pl-4">
                   <p className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 2</p>
-                  <DateRow startDayField="start_day2_alt" startMonthField="start_month2_alt" endDayField="end_day2_alt" endMonthField="end_month2_alt" data={data} onChange={onChange} days={days} />
+                  <DateRow startDayField="start_day2_alt" startMonthField="start_month2_alt" endDayField="end_day2_alt" endMonthField="end_month2_alt" data={data} onChange={onChange} />
                 </div>
               )}
             </div>
