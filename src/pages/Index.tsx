@@ -344,7 +344,7 @@ export default function Index() {
               </div>
               {showAltB && (
                 <div className="mt-3 border-l-2 border-gold/30 pl-4">
-                  <p className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 2</p>
+                  <p className="text-[0.82rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 2</p>
                   <DateRow startDayField="start_day2_alt" startMonthField="start_month2_alt" endDayField="end_day2_alt" endMonthField="end_month2_alt" data={data} onChange={onChange} />
                 </div>
               )}
