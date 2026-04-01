@@ -447,6 +447,20 @@ export default function Index() {
             </p>
           </div>
 
+          {/* Error message */}
+          {error && (
+            <div className="text-center p-6 border border-red-400/50 bg-red-500/10 mt-8">
+              <p className="text-red-400 text-[0.9rem] leading-relaxed">{error}</p>
+              <button
+                type="button"
+                onClick={handleRedownload}
+                className="inline-block mt-4 bg-transparent border border-red-400 text-red-400 font-body text-[0.82rem] font-medium tracking-[0.15em] uppercase py-2.5 px-7 cursor-pointer transition-colors hover:bg-red-400 hover:text-navy-deep"
+              >
+                ⬇ Download PDF again
+              </button>
+            </div>
+          )}
+
           {/* Success message */}
           {submitted && (
             <div className="text-center p-8 border border-gold bg-primary/[0.08] mt-8">
