@@ -135,7 +135,7 @@ export function generatePDF(obj: TourFormData): jsPDF {
   }
 
   // Section 4 — Plan A
-  section('Plan A — H.E. Karmapa comes to Europe');
+  section('Plan A — H.E. Karmapa comes to the European Center');
   row('Option 1 — Start', fmtDate(obj.start_day, obj.start_month));
   row('Option 1 — End', fmtDate(obj.end_day, obj.end_month));
 
