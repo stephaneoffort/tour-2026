@@ -4,20 +4,6 @@ import { COUNTRY_CODES, COUNTRIES, MONTHS_LIST, type TourFormData } from '@/lib/
 import { downloadPDF, generatePDF } from '@/lib/generatePdf';
 import { supabase } from '@/integrations/supabase/client';
 
-function getDaysInMonth(month: string): string[] {
-  if (!month) return Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
-  const m = parseInt(month, 10);
-  const daysCount = new Date(2026, m, 0).getDate();
-  return Array.from({ length: daysCount }, (_, i) => String(i + 1).padStart(2, '0'));
-}
-
-function isEndBeforeStart(sd: string, sm: string, ed: string, em: string): boolean {
-  if (!sd || !sm || !ed || !em) return false;
-  const start = parseInt(sm) * 100 + parseInt(sd);
-  const end = parseInt(em) * 100 + parseInt(ed);
-  return end < start;
-}
-
 const INITIAL: TourFormData = {
   center_name: '', city: '', country: '',
   p1_firstname: '', p1_lastname: '', p1_code: '', p1_phone: '', p1_email: '',
@@ -216,6 +202,8 @@ export default function Index() {
   const [showAltA, setShowAltA] = useState(false);
   const [showAltB, setShowAltB] = useState(false);
   const [copyEmail, setCopyEmail] = useState('');
+  const [error, setError] = useState<string | null>(null);  // ← ligne ajoutée
+const formRef = useRef<HTMLFormElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const lastData = useRef<TourFormData | null>(null);
 
@@ -225,22 +213,29 @@ export default function Index() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+   const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  if (!formRef.current?.checkValidity()) {
+    formRef.current?.reportValidity();
+    return;
+  }
+
+  // ← AJOUT : bloquer si une des paires de dates est incohérente
+  const datePairs: [keyof TourFormData, keyof TourFormData, keyof TourFormData, keyof TourFormData][] = [
+    ['start_day', 'start_month', 'end_day', 'end_month'],
+    ['start_day_alt', 'start_month_alt', 'end_day_alt', 'end_month_alt'],
+    ['start_day2', 'start_month2', 'end_day2', 'end_month2'],
+    ['start_day2_alt', 'start_month2_alt', 'end_day2_alt', 'end_month2_alt'],
+  ];
+  const hasInvalidDate = datePairs.some(([sd, sm, ed, em]) =>
+    isEndBeforeStart(data[sd] as string, data[sm] as string, data[ed] as string, data[em] as string)
+  );
+  if (hasInvalidDate) {
+    alert('Please check your dates — end date cannot be before start date.');
+    return;
+  } 
     if (!formRef.current?.checkValidity()) {
       formRef.current?.reportValidity();
-      return;
-    }
-
-    const datePairs: [keyof TourFormData, keyof TourFormData, keyof TourFormData, keyof TourFormData][] = [
-      ['start_day', 'start_month', 'end_day', 'end_month'],
-      ['start_day_alt', 'start_month_alt', 'end_day_alt', 'end_month_alt'],
-      ['start_day2', 'start_month2', 'end_day2', 'end_month2'],
-      ['start_day2_alt', 'start_month2_alt', 'end_day2_alt', 'end_month2_alt'],
-    ];
-    const hasInvalidDate = datePairs.some(([sd, sm, ed, em]) =>
-      isEndBeforeStart(data[sd] as string, data[sm] as string, data[ed] as string, data[em] as string)
-    );
-    if (hasInvalidDate) {
-      alert('Please check your dates — end date cannot be before start date.');
       return;
     }
 
