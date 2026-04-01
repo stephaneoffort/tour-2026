@@ -135,7 +135,7 @@ export function generatePDF(obj: TourFormData): jsPDF {
   }
 
   // Section 4 — Plan A
-  section('Plan A \u2014 H.H. Karmapa comes to the European Center');
+  section('Plan A \u2014 H.H. Karmapa comes to the Europe Center');
   row('Option 1 — Start', fmtDate(obj.start_day, obj.start_month));
   row('Option 1 — End', fmtDate(obj.end_day, obj.end_month));
 
@@ -148,7 +148,7 @@ export function generatePDF(obj: TourFormData): jsPDF {
   separator();
 
   // Section 5 — Plan B
-  section('Plan B \u2014 H.H. Karmapa does not come to the European Center');
+  section('Plan B \u2014 H.H. Karmapa does not come to the Europe Center');
   const hasB = obj.start_day2 || obj.start_month2 || obj.end_day2 || obj.end_month2;
   if (hasB) {
     row('Option 1 — Start', fmtDate(obj.start_day2, obj.start_month2));
