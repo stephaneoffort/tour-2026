@@ -129,30 +129,37 @@ export function generatePDF(obj: TourFormData): jsPDF {
   }
   separator();
 
+  // Helper to format a date
+  function fmtDate(day: string, month: string) {
+    return day && month ? day + ' / ' + MONTHS_LIST[parseInt(month) - 1] + ' 2026' : '—';
+  }
+
   // Section 4 — Plan A
   section('Plan A — H.E. Karmapa comes to Europe');
-  row('Start date',
-    obj.start_day && obj.start_month
-      ? obj.start_day + ' / ' + MONTHS_LIST[parseInt(obj.start_month) - 1] + ' 2026'
-      : '—');
-  row('End date',
-    obj.end_day && obj.end_month
-      ? obj.end_day + ' / ' + MONTHS_LIST[parseInt(obj.end_month) - 1] + ' 2026'
-      : '—');
+  row('Option 1 — Start', fmtDate(obj.start_day, obj.start_month));
+  row('Option 1 — End', fmtDate(obj.end_day, obj.end_month));
+
+  const hasAltA = obj.start_day_alt || obj.start_month_alt || obj.end_day_alt || obj.end_month_alt;
+  if (hasAltA) {
+    y += 2;
+    row('Option 2 — Start', fmtDate(obj.start_day_alt, obj.start_month_alt), 4);
+    row('Option 2 — End', fmtDate(obj.end_day_alt, obj.end_month_alt), 4);
+  }
   separator();
 
   // Section 5 — Plan B
   section('Plan B — H.E. Karmapa does not come to Europe');
   const hasB = obj.start_day2 || obj.start_month2 || obj.end_day2 || obj.end_month2;
   if (hasB) {
-    row('Start date',
-      obj.start_day2 && obj.start_month2
-        ? obj.start_day2 + ' / ' + MONTHS_LIST[parseInt(obj.start_month2) - 1] + ' 2026'
-        : '—');
-    row('End date',
-      obj.end_day2 && obj.end_month2
-        ? obj.end_day2 + ' / ' + MONTHS_LIST[parseInt(obj.end_month2) - 1] + ' 2026'
-        : '—');
+    row('Option 1 — Start', fmtDate(obj.start_day2, obj.start_month2));
+    row('Option 1 — End', fmtDate(obj.end_day2, obj.end_month2));
+
+    const hasAltB = obj.start_day2_alt || obj.start_month2_alt || obj.end_day2_alt || obj.end_month2_alt;
+    if (hasAltB) {
+      y += 2;
+      row('Option 2 — Start', fmtDate(obj.start_day2_alt, obj.start_month2_alt), 4);
+      row('Option 2 — End', fmtDate(obj.end_day2_alt, obj.end_month2_alt), 4);
+    }
   } else {
     doc.setTextColor(...DGRAY);
     doc.setFont('helvetica', 'italic');
