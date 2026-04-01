@@ -303,7 +303,7 @@ export default function Index() {
             {/* Plan A */}
             <div className="border border-secondary/25 border-t-2 border-t-gold px-5 pt-5 pb-3.5 mb-6 bg-navy/[0.07]">
               <h3 className="font-display font-semibold text-[1.05rem] text-gold-light mb-1 tracking-[0.04em]">Plan A</h3>
-              <p className="text-[1.15rem] text-gold-light font-display italic mb-5 tracking-[0.02em]">H.E. Karmapa comes to the European Center</p>
+              <p className="text-[1.15rem] text-gold-light font-display italic mb-5 tracking-[0.02em]"><p className="text-[1.15rem] text-gold-light font-display italic mb-5 tracking-[0.02em]">H.H. Karmapa comes to the European Center</p></p>
               <p className="text-[0.82rem] text-bgray/70 mb-5 leading-relaxed">Please indicate your preferred dates for a visit of H.E. Jamgon Kongtrul Rinpoche to your center. You may add a second date option if your first choice is not available.</p>
 
               <p className="text-[0.72rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 1</p>
