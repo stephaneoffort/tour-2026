@@ -52,7 +52,7 @@ function PersonBlock({
 
   return (
     <div className="border border-secondary/25 border-t-2 border-t-secondary px-5 pt-5 pb-3.5 mb-5 bg-navy/[0.07]">
-      <h3 className="font-display font-semibold text-[1.05rem] text-gold-light mb-[18px] tracking-[0.04em]">
+      <h3 className="font-display font-semibold text-[1.15rem] text-gold-light mb-[18px] tracking-[0.04em]">
         Person responsible {num}{num === 2 && <span className="ml-2 text-[0.75rem] text-bgray/60 font-normal tracking-normal normal-case">(optional)</span>}
       </h3>
 
