@@ -328,7 +328,7 @@ export default function Index() {
             {/* Plan B */}
             <div className="border border-secondary/25 border-t-2 border-t-secondary px-5 pt-5 pb-3.5 mb-6 bg-navy/[0.07]">
               <h3 className="font-display font-semibold text-[1.15rem] text-gold-light mb-1 tracking-[0.04em]">Plan B</h3>
-              <p className="text-[1.25rem] text-gold-light font-display italic mb-5 tracking-[0.02em]">H.H. Karmapa does not come to the European Center</p>
+              <p className="text-[1.25rem] text-gold-light font-display italic mb-5 tracking-[0.02em]">H.H. Karmapa does not come to the Europe Center</p>
               <p className="text-[0.92rem] text-bgray/70 mb-5 leading-relaxed">Please indicate your preferred dates for a visit of H.E. Jamgon Kongtrul Rinpoche to your center in case H.H Karmapa Thaye Dorje cannot visit EC. You may add a second date option if your first choice is not available.</p>
 
               <p className="text-[0.82rem] font-semibold tracking-[0.1em] uppercase text-bgray mb-2">Option 1</p>
