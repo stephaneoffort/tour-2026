@@ -225,29 +225,22 @@ export default function Index() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  if (!formRef.current?.checkValidity()) {
-    formRef.current?.reportValidity();
-    return;
-  }
-
-  // ← AJOUT : bloquer si une des paires de dates est incohérente
-  const datePairs: [keyof TourFormData, keyof TourFormData, keyof TourFormData, keyof TourFormData][] = [
-    ['start_day', 'start_month', 'end_day', 'end_month'],
-    ['start_day_alt', 'start_month_alt', 'end_day_alt', 'end_month_alt'],
-    ['start_day2', 'start_month2', 'end_day2', 'end_month2'],
-    ['start_day2_alt', 'start_month2_alt', 'end_day2_alt', 'end_month2_alt'],
-  ];
-  const hasInvalidDate = datePairs.some(([sd, sm, ed, em]) =>
-    isEndBeforeStart(data[sd] as string, data[sm] as string, data[ed] as string, data[em] as string)
-  );
-  if (hasInvalidDate) {
-    alert('Please check your dates — end date cannot be before start date.');
-    return;
-  } 
     if (!formRef.current?.checkValidity()) {
       formRef.current?.reportValidity();
+      return;
+    }
+
+    const datePairs: [keyof TourFormData, keyof TourFormData, keyof TourFormData, keyof TourFormData][] = [
+      ['start_day', 'start_month', 'end_day', 'end_month'],
+      ['start_day_alt', 'start_month_alt', 'end_day_alt', 'end_month_alt'],
+      ['start_day2', 'start_month2', 'end_day2', 'end_month2'],
+      ['start_day2_alt', 'start_month2_alt', 'end_day2_alt', 'end_month2_alt'],
+    ];
+    const hasInvalidDate = datePairs.some(([sd, sm, ed, em]) =>
+      isEndBeforeStart(data[sd] as string, data[sm] as string, data[ed] as string, data[em] as string)
+    );
+    if (hasInvalidDate) {
+      alert('Please check your dates — end date cannot be before start date.');
       return;
     }
 
