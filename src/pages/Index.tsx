@@ -282,20 +282,6 @@ export default function Index() {
     if (lastData.current) downloadPDF(lastData.current);
   };
 
-function getDaysInMonth(month: string): string[] {
-  if (!month) return Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
-  const m = parseInt(month, 10);
-  const daysInMonth = new Date(2026, m, 0).getDate();
-  return Array.from({ length: daysInMonth }, (_, i) => String(i + 1).padStart(2, '0'));
-}
-
-function isEndBeforeStart(sd: string, sm: string, ed: string, em: string): boolean {
-  if (!sd || !sm || !ed || !em) return false;
-  const start = parseInt(sm, 10) * 100 + parseInt(sd, 10);
-  const end = parseInt(em, 10) * 100 + parseInt(ed, 10);
-  return end < start;
-}
-
 
 
   return (
