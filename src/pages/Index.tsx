@@ -310,7 +310,7 @@ export default function Index() {
               <DateRow startDayField="start_day" startMonthField="start_month" endDayField="end_day" endMonthField="end_month" data={data} onChange={onChange} required />
 
               <div className="mt-4 mb-2">
-                <span className="text-[0.82rem] text-gold italic underline underline-offset-2 hover:text-gold-light transition-colors cursor-pointer" onClick={() => {
+                <span className="text-[0.92rem] text-gold italic underline underline-offset-2 hover:text-gold-light transition-colors cursor-pointer" onClick={() => {
                   if (showAltA) { onChange('start_day_alt',''); onChange('start_month_alt',''); onChange('end_day_alt',''); onChange('end_month_alt',''); }
                   setShowAltA(!showAltA);
                 }}>
