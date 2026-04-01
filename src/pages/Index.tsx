@@ -32,7 +32,7 @@ function FieldLabel({ children, htmlFor }: { children: React.ReactNode; htmlFor?
 }
 
 const inputClass =
-  "bg-foreground/5 border border-foreground/10 border-b-2 border-b-secondary text-foreground font-body text-[0.95rem] font-light px-3.5 py-2.5 outline-none transition-all duration-250 w-full rounded-sm focus:border-b-gold focus:bg-primary/[0.07] focus:shadow-[0_4px_18px_hsl(var(--primary)/0.08)] placeholder:text-foreground/25 placeholder:italic appearance-none";
+  "bg-foreground/5 border border-foreground/10 border-b-2 border-b-secondary text-foreground font-body text-base font-light px-3.5 py-3 outline-none transition-all duration-250 w-full rounded-sm focus:border-b-gold focus:bg-primary/[0.07] focus:shadow-[0_4px_18px_hsl(var(--primary)/0.08)] placeholder:text-foreground/25 placeholder:italic appearance-none";
 
 const selectClass = inputClass + " bg-no-repeat bg-[right_12px_center] pr-[34px] cursor-pointer";
 
