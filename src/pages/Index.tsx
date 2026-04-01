@@ -202,8 +202,7 @@ export default function Index() {
   const [showAltA, setShowAltA] = useState(false);
   const [showAltB, setShowAltB] = useState(false);
   const [copyEmail, setCopyEmail] = useState('');
-  const [error, setError] = useState<string | null>(null);  // ← ligne ajoutée
-const formRef = useRef<HTMLFormElement>(null);
+  const [error, setError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const lastData = useRef<TourFormData | null>(null);
 
