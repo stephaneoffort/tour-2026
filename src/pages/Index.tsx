@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
 import headerBanner from '@/assets/header-banner.jpg';
-import { COUNTRY_CODES, COUNTRIES, MONTHS_LIST, type TourFormData } from '@/lib/formData';
+import { COUNTRY_CODES, COUNTRIES, type TourFormData } from '@/lib/formData';
 import { downloadPDF, generatePDF } from '@/lib/generatePdf';
 import { supabase } from '@/integrations/supabase/client';
 
